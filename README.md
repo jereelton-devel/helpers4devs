@@ -118,54 +118,54 @@ total 24
 <h6>NOTA: Use um editor de texto qualquer</h6>
 <pre>sublime-text.subl Homestead.yaml</pre>
 <pre>
----
-ip: "192.168.10.10"
-memory: 2048
-cpus: 2
-provider: virtualbox
-
-authorize: ~/.ssh/id_rsa_homestead.pub
-
-keys:
-    - ~/.ssh/id_rsa_homestead
-
-folders:
-    - map: ~/Devel
-      to: /home/vagrant/code
-
-sites:
-    - map: site1.local
-      to: /home/vagrant/code/site1
-
-    - map: site2.local
-      to: /home/vagrant/code/site2/public
-
-databases:
-    - homestead
-
-features:
-    - mysql: false
-    - mariadb: false
-    - postgresql: false
-    - ohmyzsh: false
-    - webdriver: false
-
-networks:
-  - type: "public_network"
-    ip: "192.168.15.100" #Exemplo
-
-#services:
-#    - enabled:
-#        - "postgresql@12-main"
-#    - disabled:
-#        - "postgresql@11-main"
-
-# ports:
-#     - send: 50000
-#       to: 5000
-#     - send: 7777
-#       to: 777
-#       protocol: udp
+    ---
+    ip: "192.168.10.10"
+    memory: 2048
+    cpus: 2
+    provider: virtualbox
+    
+    authorize: ~/.ssh/id_rsa_homestead.pub
+    
+    keys:
+        - ~/.ssh/id_rsa_homestead
+    
+    folders:
+        - map: ~/Devel
+          to: /home/vagrant/code
+    
+    sites:
+        - map: site1.local
+          to: /home/vagrant/code/site1
+    
+        - map: site2.local
+          to: /home/vagrant/code/site2/public
+    
+    databases:
+        - homestead
+    
+    features:
+        - mysql: false
+        - mariadb: false
+        - postgresql: false
+        - ohmyzsh: false
+        - webdriver: false
+    
+    networks:
+      - type: "public_network"
+        ip: "192.168.15.100" #Exemplo
+    
+    #services:
+    #    - enabled:
+    #        - "postgresql@12-main"
+    #    - disabled:
+    #        - "postgresql@11-main"
+    
+    # ports:
+    #     - send: 50000
+    #       to: 5000
+    #     - send: 7777
+    #       to: 777
+    #       protocol: udp
 </pre>
 
 <h5>Definir resolução de nomes para os sites/projetos dentro do homestead</h5>
