@@ -1,0 +1,161 @@
+
+<h1>Apache Server Helper</h1>
+
+<hr />
+
+<h3>Instalar apache2</h3>
+<pre>
+sudo apt-get update
+sudo apt upgrade
+sudo apt-get install apache2
+</pre>
+
+<hr />
+
+<h3>Instalar o PHP e o modulo do apache para PHP</h3>
+
+<pre>
+sudo apt-get install php7.4 libapache2-mod-php7.4
+sudo service apache2 restart
+</pre>
+
+<hr />
+
+<h3>Iniciar/Gerenciar serviços Apache</h3>
+
+<pre>
+sudo service apache2 stop
+sudo service apache2 start
+sudo service apache2 status
+sudo service apache2 restart
+</pre>
+
+<hr />
+
+<h3>Acessar a pasta do webserver apache2</h3>
+
+<pre>
+cd /var/www/html
+ls -ltr
+total 12
+-rw-r--r-- 1 root root 10918 jul 23 09:27 index.html
+</pre>
+
+<hr />
+
+<h3>Virtual Hosts Apache</h3>
+
+<h5>Criar estrutura de diretorio</h5>
+
+<pre>
+sudo mkdir -p /var/www/sample.local/public
+sudo mkdir -p /var/www/test.local/public
+</pre>
+
+<h5>Conceder permissões</h5>
+
+<pre>
+sudo chown -R $USER:$USER /var/www/sample.local/public
+sudo chown -R $USER:$USER /var/www/test.local/public
+sudo chmod -R 755 /var/www
+</pre>
+
+<h5>Criar arquivos especificos de cada virtual host</h5>
+
+<pre>
+touch /var/www/sample.local/public/index.html
+touch /var/www/test.local/public/index.html
+
+#Nao esqueça de editar os arquivos com os respectivos conteudos, exemplo:
+[html]
+    [head]
+        [title]Welcome to test.local[/title]
+    [/head]
+    [body]
+        [h1]The test.com virtual host is running...[/h1]
+    [/body]
+[/html]
+</pre>
+
+<h5>Criar arquivos virtual hosts</h5>
+
+<pre>
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/sample.local.conf
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/test.local.conf
+
+#Editar o arquivo virtual host, exemplo:
+[VirtualHost *:80]
+    ServerAdmin admin@example.com
+    ServerName sample.local
+    ServerAlias apache.sample.local
+    DocumentRoot /var/www/sample.local/public
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+[/VirtualHost]
+</pre>
+
+<h5>Habilitar os novos arquivos de host virtual</h5>
+
+<pre>
+sudo a2ensite sample.local.conf
+sudo a2ensite test.local.conf
+
+#Desabilitar site padrão apache
+sudo a2dissite 000-default.conf
+</pre>
+
+<h5>Reiniciar Apache</h5>
+
+<pre>
+sudo systemctl restart apache2
+sudo systemctl reload apache2
+sudo service apache2 restart
+sudo service apache2 status
+</pre>
+
+<h5>Configurar arquivo /etc/hosts</h5>
+
+<pre>
+127.0.1.1   sample.local
+127.0.1.1   test.local
+</pre>
+
+<hr />
+
+<h3>Habilitar rewrite module do Apache para arquivos .HTACCESS</h3>
+
+<pre>
+vi .htaccess
+sudo a2enmod restart
+sudo a2enmod rewrite
+</pre>
+
+<hr />
+
+<h3>Base de arquivos Apache</h3>
+
+<pre>
+sudo vi /etc/apache2/apache2.conf
+grep "var/www/html" /etc/apache2/apache2.conf
+grep "Director" /etc/apache2/apache2.conf
+ls /etc/httpd/conf/httpd.conf
+sudo vi /etc/apache2/apache2.conf
+systemctl restart apache2.service
+sudo systemctl restart apache2.service
+sudo vi /etc/apache2/sites-available/default-ssl.conf
+ls /etc/apache2/apache2.conf
+cat /etc/apache2/apache2.conf
+cat /etc/apache2/sites-available/000-default.conf
+sudo vi /etc/apache2/sites-available/000-default.conf
+sudo systemctl restart apache2.service
+sudo vi /etc/apache2/sites-available/000-default.conf
+sudo systemctl restart apache2.service
+sudo vi /etc/apache2/sites-available/000-default.conf
+sudo vi /etc/apache2/sites-available/default-ssl.conf
+sudo vi /etc/apache2/sites-enabled/
+sudo vi /etc/apache2/sites-enabled/000-default.conf
+sudo /etc/init.d/apache2 restart
+sudo vi /etc/apache2/sites-available/default-ssl.conf
+sudo vi /etc/apache2/sites-enabled/000-default.conf
+sudo systemctl restart apache2.service
+</pre>
