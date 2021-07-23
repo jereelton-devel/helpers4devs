@@ -1,0 +1,203 @@
+
+::INFO-DIRECT::
+
+# Estudar
+
+Aws: Lambda, S3, EC2, SQS, SNS
+
+-------------------------------------
+
+# Instalar e Documentar
+apache2
+php
+php-mysql
+phpmyadmin
+mysql
+curl
+awscli
+vagrant
+homestead
+laravel
+git
+composer
+docker (docker-ce)
+docker-compose
+npm
+nodejs
+create-react-app
+doctrine (composer req doctrine, composer req doctrine-orm-module)
+	php bin/console doctrine:database:create (configuarar dotenv)
+	php bin/console doctrine:database:diff
+	php bin/console doctrine:database:migrate
+maker (composer req maker)
+	php bin/console make:entity [Entidade]
+
+-------------------------------------------------------------------------------
+
+# JWT
+
+	[Introdução]
+
+		Conhecido como token seguro o Json Web Token é uma chave de segurança para acesso controlado a recursos restritos contidos em apis.
+
+		Em Node a chave token é armazenada no cliente que tem a responsabilidade de guardar, proteger e informar o token quando requisitado pelo servidor. É possivel configurar opções de uso e controle como expiração de token, tipo de algoritimo etc..
+
+	[Exemplo]
+
+		- NodeJS
+
+			- Ínstalar
+				npm install jsonwebtoken --save (para salvar no package.json)
+			
+			- Uso
+				const jwt = require('jsonwebtoken');
+
+				...
+				const token = jwt.sign(
+					//Payload
+					{
+						nome: "nome.usuario",
+						email: "email.usuario@email.com"
+					},
+					
+					//Arquivo dotenv da aplicação
+					process.env.JWT_TOKEN,
+
+					//Opções JWT
+					{
+						expiresIn: '1h'
+					}
+				);
+				...
+
+			- Avançado
+				- Para garantir o uso do JWT durante as transações na api é necessário utiliar um metodo de validação do token, que pode ser um middleware de controle de login.
+
+
+-------------------------------------------------------------------------------
+
+# Postman
+
+	[Introdução]
+
+		Programa utilizado para realizar requests a uma API Rest entre outras por meio de inteface grafica, onde é possível documentar a estrutura da API com exemplos e considerações gerais de uso.
+
+	[Como Usar]
+
+		- Em Collections clicar em New Collection
+			- Preencher Name
+			- Descrever API em Description
+				- Se atentar as marcações markdown para ajudar na descrição
+				- Descrever usabilidade e parametrização da API
+
+		- Apos criar a collection podem ser criadas pastas ou criar direto as requisições
+
+		- Pode ser visualizado no web, porém precisa estar logado, para isso basta salvar as requisições e o resultado obtido.
+
+		- Também é possivel passar parametros nas requisições:
+			- http://link.api/:parametro1/:parametro2
+
+		- É possível ainda automatizar o uso do postman com pre-requests:
+			- Criar um environment (ambiente)
+			- Configurar o ambiente com as variaveis do pre request, exemplo:
+				- url: http://localhost
+				- email: email@email.com
+				- senha: 123
+				- auth: 
+				...
+			- Logo apos escolher uma collection e na aba Pre-request Scripts criar a logica para automação do processo, exemplo:
+				pm.sendRequest({
+				    url: pm.environment.get("local") + '/auth',
+				    method: 'POST',
+				    header: {
+				        'content-type': 'application/json'
+				    },
+				    body: {
+				        mode: 'raw',
+				        raw: JSON.stringify({ 
+				            email: pm.environment.get("email"), 
+				            password: pm.environment.get("password") })
+				    }
+				}, function (err, res) {
+				    pm.environment.set("auth", "JWT " + res.json().token);
+				});
+			- Assim é possível utilizar e recuperar as variveis na url de request e também no body, headers etc, exemplo:
+				GET http://{{url}}/endpoint
+					Headers
+						Authorization: {{auth}}
+			- Em seguida a request pode ser salva para posterior utilização
+
+
+-------------------------------------------------------------------------------
+
+# Crontab (agent linux)
+
+	[Introdução]
+
+		Comandos executados automaticamente pelo sistema Unix via agendamento de jobs (cron jobs).
+
+	[Comandos]
+
+		crontab -l (lista cron jobs)
+		crontab -e (edita a cron atual)
+		crontab -r (apaga a cron atual)
+		crontab -i (apaga a cron atual com confirmação da operação)
+
+	[Estrutura]
+
+		* * * * * [comando] [ >> saida: (opcional)]
+
+		- Minuto (0 a 59)
+		- Hora (0 a 23) 
+		- Dia (1 a 31)
+		- Mês (1 a 12)
+		- Dia da semana (0 a 7)
+		- Comando (comando a ser executado)
+
+	[Exemplos]
+		0 5 * * * /root/backup.sh >/dev/null 2>&1
+		00 10 * * * php /var/www/site/bin/script.php
+		00 10 * * * /var/www/site/bin/script.sh
+		30 22 10 * * echo "Cron is running..." > /home/user/cron/log.txt
+
+-------------------------------------------------------------------------------
+
+# Pipelines
+
+	[Introdução]
+
+		Serviço de integração continua e entrega continua, CI (Continuos Integration) & CD (Continuos Delivey). As estapas de um CI ou CD podem ser dispostas em:
+
+			- Planejamento
+			- Codificação / Programação
+			- Build
+			- Test
+			- Release
+			- Deploy
+			- Operate
+			- Monitor
+
+		Todas as etapas devem dar um feedback para os desenvolvedores e gestores do projeto sobre bugs, problemas, falhas ou inconsistencias encontradas.
+
+		Um exemplo forte de pipeline é o Jenkins, uma ferramenta completa e open source para criar um ambiente completo.
+
+	[Exemplo]
+
+		- Planejamento
+		- Development: Codificação / Programação	
+		- Build: Merge do pull request por exemplo (Controle de versao - GIT)
+		- Test: Testes Unitarios
+		- Release: Ambiente de testes
+		- Deploy: Ambiente de produção
+		- Operate: Uso em produção
+		- Monitor: Monitoramento
+
+
+-------------------------------------------------------------------------------
+
+# Jenkins
+
+	[Introdução]
+
+		O Jenkins é uma ferramenta de pipeline usada para Integração e Entraga Continua de um software, possui todos os recursos descritos e pertencentes a uma ferramenta de pipeline.
+
