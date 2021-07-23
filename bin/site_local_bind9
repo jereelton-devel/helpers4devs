@@ -1,0 +1,414 @@
+#!/bin/bash
+
+################################################################################
+# Author: Jereelton Teixeira (jereelton-devel)
+################################################################################
+
+#----------------------------------------------------------------------------------------
+
+function checkUser {
+    USER_CURRENT=$(whoami)
+    if [[ "${USER_CURRENT}" != "${USERNAME}" ]]; then
+        echo "Error: Please run as ${USERNAME}..."
+        exit
+    fi
+}
+
+#----------------------------------------------------------------------------------------
+
+function checkRoot {
+    if [[ "$EUID" -ne 0 ]]; then
+        echo "Error: Please run as root..."
+        exit
+    fi
+}
+#----------------------------------------------------------------------------------------
+
+function endProcess {
+    END_TIME=$(date +%T)
+
+    echo "------------------------------------------------------------------"
+    echo "START TIME : $START_TIME"
+    echo "END TIME   : $END_TIME"
+    echo ""
+    echo "Everything fine !"
+    echo ""
+    exit
+}
+#----------------------------------------------------------------------------------------
+
+function helper {
+    echo "------------------------------------------------------------------"
+    echo "!HELPER, use:"
+    echo "./site_local_bind9 add:site"
+    echo "
+    --reload - Restart vagrant and bind9 services
+    --help - Show all commands and helpers
+
+    (To commands below please, see Documentation on GitHub)
+    add:site
+    "
+    echo "------------------------------------------------------------------"
+    exit
+}
+#----------------------------------------------------------------------------------------
+
+START_TIME=$(date +%T)
+
+echo ""
+echo "*************************************************************************"
+echo "Site Local Bind9"
+echo "*************************************************************************"
+echo ""
+
+ACCEPTED_COMMANDS=";add:site;--reload;"
+
+TOTAL_ARGS=$#
+ARRAY_ARGS=($*)
+ARGS=$*
+ARG1=$1
+ARG2=$2
+ARG3=$3
+ARG4=$4
+ARG5=$5
+
+if [[ ! $ARG1 =~ "--reload" ]]; then
+    checkRoot
+fi
+
+#----------------------------------------------------------------------------------------
+# Check if exists file site_local_bind9.cfg
+CONFIG_FILE="site_local_bind9.cfg"
+
+if ! ls "../config/${CONFIG_FILE}" >> /dev/null 2>&1
+then
+    if ! ls "config/${CONFIG_FILE}" >> /dev/null 2>&1
+    then
+        if ! ls "${CONFIG_FILE}" >> /dev/null 2>&1
+        then
+            echo "File ${CONFIG_FILE} not found !"
+            echo ""
+            echo "Where is the ${CONFIG_FILE} ? "
+            read CONFIG_FILE
+        fi
+    fi
+fi
+
+if [[ ! ${CONFIG_FILE} ]]; then
+    echo "Error: Missing File ${CONFIG_FILE} !"
+    exit
+fi
+
+# Try Get the path file site_local_bind9.cfg
+
+if ls "../config/${CONFIG_FILE}" >> /dev/null 2>&1
+then
+    PATH_CONFIG_FILE="../config/${CONFIG_FILE}"
+elif ls "config/${CONFIG_FILE}" >> /dev/null 2>&1
+then
+    PATH_CONFIG_FILE="config/${CONFIG_FILE}"
+elif ls "${CONFIG_FILE}" >> /dev/null 2>&1
+then
+    PATH_CONFIG_FILE="${CONFIG_FILE}"
+fi
+
+if [[ ! ${PATH_CONFIG_FILE} ]]; then
+    echo "Error: Missing File ${CONFIG_FILE} !"
+    exit
+fi
+
+USERNAME=$(grep "USERNAME" ${PATH_CONFIG_FILE} | cut -d "=" -f2)
+HOMESTEAD_PATH=$(grep "HOMESTEAD_PATH" ${PATH_CONFIG_FILE} | cut -d "=" -f2)
+SITE_NAME=$(grep "SITE_NAME" ${PATH_CONFIG_FILE} | cut -d "=" -f2)
+DEVEL_PATH=$(grep "DEVEL_PATH" ${PATH_CONFIG_FILE} | cut -d "=" -f2)
+VAGRANT_APP_PATH=$(grep "VAGRANT_APP_PATH" ${PATH_CONFIG_FILE} | cut -d "=" -f2)
+IP_SERVER=$(grep "IP_SERVER" ${PATH_CONFIG_FILE} | cut -d "=" -f2)
+
+echo ""
+echo "CONFIGURATION:"
+cat ${PATH_CONFIG_FILE}
+echo ""
+
+if [[ $ARG1 =~ "--reload" ]]; then
+    checkUser
+
+    #----------------------------------------------------------------------------------------
+    # Services Vagrant and Bind9 restart
+
+    echo ""
+    echo "###################################################################################"
+    echo "# VAGRANT #"
+    echo "###################################################################################"
+    echo ""
+
+    PWD_SAVE=$(echo $PWD)
+    pwd
+    cd ${HOMESTEAD_PATH}
+    pwd
+    vagrant reload --provision
+
+    echo ""
+    echo "###################################################################################"
+    echo "# BIND #"
+    echo "###################################################################################"
+    echo ""
+
+    sudo service bind9 restart
+
+    echo "--------------------------------------------------------------"
+    sudo service bind9 status
+
+    cd "${PWD_SAVE}"
+
+    echo ""
+    echo "Use http://${SITE_NAME}.local to access the application locally..."
+    echo ""
+
+    endProcess
+fi
+
+#----------------------------------------------------------------------------------------
+#Valid Command Accept
+
+if [[ ! $ACCEPTED_COMMANDS =~ ';'${ARRAY_ARGS}';' ]]; then
+    echo "ERROR: Command not accepted: ${ARRAY_ARGS}"
+    helper
+fi
+
+#----------------------------------------------------------------------------------------
+
+#Helper framework
+
+if [[ $ARG1 == "--help" ]]; then
+    sleep 2
+    echo ""
+    helper
+fi
+#----------------------------------------------------------------------------------------
+
+#Start process
+
+#----------------------------------------------------------------------------------------
+# Check if exists file Homestead.yaml
+
+HOMESTEAD_YAML="${HOMESTEAD_PATH}/Homestead.yaml"
+
+if ! ls "${HOMESTEAD_YAML}" >> /dev/null 2>&1
+then
+    echo "Error: File ${HOMESTEAD_YAML} not found, Homestead is installed ?"
+    exit
+fi
+
+#----------------------------------------------------------------------------------------
+# Check if exists site name into Homestead.yaml
+
+if grep "${SITE_NAME}.local" "${HOMESTEAD_YAML}" >> /dev/null 2>&1
+then
+    echo "Error: Site Name is already exists into ${HOMESTEAD_YAML} !"
+    grep "${SITE_NAME}.local" "${HOMESTEAD_YAML}"
+    echo "Continue [Ctrl+C = no, Enter = yes] ?"
+    read -n1 OP
+fi
+
+#----------------------------------------------------------------------------------------
+# Insert Site Name into Homestead.yaml
+EXTENSION_BIND9="site.local.bind9"
+HOMESTEAD_YAML_BIND9="${HOMESTEAD_YAML}.${EXTENSION_BIND9}"
+
+echo "Copying original file..."
+cp -v "${HOMESTEAD_YAML}" "${HOMESTEAD_YAML_BIND9}"
+echo ""
+
+echo "" > "${HOMESTEAD_YAML_BIND9}"
+
+MAP=""
+TO=""
+CONTROL=0
+
+echo "Reading original file..."
+
+while IFS= read -r line || [[ -n "$line" ]]; do
+
+    echo "${line}"
+
+    if [[ $line =~ 'sites:' && ${CONTROL} == 0 ]];
+    then
+        echo "$line" >> "${HOMESTEAD_YAML_BIND9}"
+        CONTROL=1
+        continue
+    fi
+
+    if [[ $line =~ '- map:' && ${CONTROL} == 1 ]];
+    then
+        MAP="${line}"
+        echo "$line" >> "${HOMESTEAD_YAML_BIND9}"
+        CONTROL=2
+        continue
+    fi
+
+    if [[ $line =~ 'to:' && ${CONTROL} == 2 ]];
+    then
+        TO="${line}"
+        echo "$line" >> "${HOMESTEAD_YAML_BIND9}"
+
+        #Line Separator
+        echo "" >> "${HOMESTEAD_YAML_BIND9}"
+
+        MAP_FORM=$(echo "${MAP}" | cut -d ":" -f1)
+        MAP_FORM="${MAP_FORM}: ${SITE_NAME}.local"
+        echo "$MAP_FORM" >> "${HOMESTEAD_YAML_BIND9}"
+
+        TO_FORM=$(echo "${TO}" | cut -d ":" -f1)
+        TO_FORM="${TO_FORM}: ${VAGRANT_APP_PATH}/${SITE_NAME}"
+        echo "$TO_FORM" >> "${HOMESTEAD_YAML_BIND9}"
+        CONTROL=3
+        continue
+    fi
+
+    echo "${line}" >> "${HOMESTEAD_YAML_BIND9}"
+
+done < "${HOMESTEAD_YAML}"
+
+#----------------------------------------------------------------------------------------
+# Check if site name is in Homestead.yaml
+
+if ! grep "${SITE_NAME}.local" "${HOMESTEAD_YAML_BIND9}" >> /dev/null 2>&1
+then
+    echo "Critical Error: Site Name is not persist into ${HOMESTEAD_YAML_BIND9} !"
+    exit
+fi
+
+#----------------------------------------------------------------------------------------
+# Backup File
+
+echo "Backup original file..."
+cp -v "${HOMESTEAD_YAML}" "${HOMESTEAD_YAML}.bkp"
+echo ""
+
+#----------------------------------------------------------------------------------------
+# Update Homestead file
+
+echo "Update original file..."
+mv -v "${HOMESTEAD_YAML_BIND9}" "${HOMESTEAD_YAML}"
+echo ""
+
+chown ${USERNAME}:${USERNAME} ${HOMESTEAD_YAML}
+
+#----------------------------------------------------------------------------------------
+# Edit /etc/bind/named.conf.local
+
+ZONE_SITE="zone \"${SITE_NAME}.local\" {
+	type master;
+	file \"/etc/bind/db.${SITE_NAME}\";
+};
+"
+
+DOMAIN_REVERSE_BIND9="//Dominio reverse
+//zone \"15.168.192.in-addr.arpa\" {
+//	type master;
+//	file \"/etc/bind/db.${SITE_NAME}.192\";
+//
+//};
+"
+
+sudo cp -v "/etc/bind/named.conf.local" "/etc/bind/named.conf.local.${EXTENSION_BIND9}"
+
+sudo echo "" >> "/etc/bind/named.conf.local.${EXTENSION_BIND9}"
+sudo echo "${ZONE_SITE}" >> "/etc/bind/named.conf.local.${EXTENSION_BIND9}"
+
+sudo echo "" >> "/etc/bind/named.conf.local.${EXTENSION_BIND9}"
+sudo echo "${DOMAIN_REVERSE_BIND9}" >> "/etc/bind/named.conf.local.${EXTENSION_BIND9}"
+
+sudo cp -v "/etc/bind/named.conf.local" "/etc/bind/named.conf.local.bkp"
+sudo mv -v "/etc/bind/named.conf.local.${EXTENSION_BIND9}" "/etc/bind/named.conf.local"
+
+#----------------------------------------------------------------------------------------
+# Copy /etc/bind/db.local
+
+DB_LOCAL="
+;
+; BIND data file for local loopback interface
+;
+\$TTL	604800
+@	IN	SOA	${SITE_NAME}. root.${SITE_NAME}. (
+			      2		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+@	IN	NS	${SITE_NAME}.
+@	IN	A	127.0.0.1
+@	IN	AAAA	::1
+"
+
+sudo cp -v "/etc/bind/db.local" "/etc/bind/db.${SITE_NAME}"
+
+sudo echo "${DB_LOCAL}" >> "/etc/bind/db.${SITE_NAME}"
+
+#----------------------------------------------------------------------------------------
+# Copy /etc/bind/db.192
+
+DB_192="
+;
+; BIND reverse data file for local loopback interface
+;
+\$TTL	604800
+@	IN	SOA	${SITE_NAME}.local. root.${SITE_NAME}.local. (
+			      1		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+@	IN	NS	${SITE_NAME}.local.
+1.0.0	IN	PTR	${SITE_NAME}.local.
+
+"
+
+sudo cp -v "/etc/bind/db.192" "/etc/bind/db.${SITE_NAME}.192"
+
+sudo echo "${DB_192}" >> "/etc/bind/db.${SITE_NAME}"
+
+#----------------------------------------------------------------------------------------
+# Add site name into /etc/hosts
+
+HOSTS_FILE_DATA="${IP_SERVER}  ${SITE_NAME}.local"
+
+sudo cp -v /etc/hosts /etc/hosts.bkp
+
+sudo echo "${HOSTS_FILE_DATA}" >> /etc/hosts
+
+#----------------------------------------------------------------------------------------
+# Get Folder Mapping
+
+echo ""
+echo "[DETAILS]"
+echo ""
+
+echo "---------------------------------------------------------------"
+echo "Website Folder Development: "
+grep -A3 'folders:' "${HOMESTEAD_YAML}"
+echo ""
+
+echo "---------------------------------------------------------------"
+echo "Website Folder Homestead: "
+echo "${MAP_FORM}"
+echo "${TO_FORM}"
+echo ""
+
+echo "---------------------------------------------------------------"
+echo "/etc/hosts"
+echo ""
+cat /etc/hosts
+echo ""
+
+#----------------------------------------------------------------------------------------
+
+#End process
+
+echo ""
+echo "Now, execute ./site_local_bind9 --reload to refresh the environment..."
+echo ""
+
+endProcess

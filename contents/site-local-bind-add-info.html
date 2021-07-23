@@ -1,0 +1,93 @@
+
+<h1>[ SITE LOCAL ADD HELP ]</h1>
+
+<hr />
+
+<h3>Criar website local usando o HOMESTEAD e o BIND9</h3>
+
+<pre>
+- Inserir o site no arquivo Homestead.yaml:
+
+	sites:
+	    - map: exemplo.local
+	      to: /home/vagrant/code/exemplo
+
+- Configurar o serviço de DNS no BIND9:
+
+	- Editar o arquivo /etc/bind/named.conf.local:
+
+		//Adicionar zona
+		zone "sample.local" {
+			type master;
+			file "/etc/bind/db.sample";
+		};
+
+		//Dominio reverse
+		//zone "15.168.192.in-addr.arpa" {
+		//	type master;
+		//	file "/etc/bind/db.sample.192";
+		//
+		//};
+
+	- Copiar o arquivo de exemplo /etc/bind/db.local
+
+		cp db.local db.sample
+
+		//Editar o arquivo:
+		;
+		; BIND data file for local loopback interface
+		;
+		$TTL	604800
+		@	IN	SOA	sample.local. root.sample.local. (
+					      2		; Serial
+					 604800		; Refresh
+					  86400		; Retry
+					2419200		; Expire
+					 604800 )	; Negative Cache TTL
+		;
+		@	IN	NS	sample.local.
+		@	IN	A	127.0.0.1
+		@	IN	AAAA	::1
+
+	- Copiar o arquivo de 192:
+
+		cp db.192 db.sample.192
+
+		;
+		; BIND reverse data file for local loopback interface
+		;
+		$TTL	604800
+		@	IN	SOA	sample.local. root.sample.local. (
+					      1		; Serial
+					 604800		; Refresh
+					  86400		; Retry
+					2419200		; Expire
+					 604800 )	; Negative Cache TTL
+		;
+		@	IN	NS	sample.local.
+		1.0.0	IN	PTR	sample.local.
+
+- Adicionar o DNS no arquivo hosts:
+
+	/etc/hosts
+
+	LOCAL(USAR O IP CONFIGURADO NO ARQUIVO Homestead.yaml: Homestead.yaml)
+		---
+		ip: "192.168.10.10"
+
+	# Homestead
+	192.168.10.10	sample.local
+
+	REMOTO/SERVER(USAR O IP CONFIGURADO NO ARQUIVO Homestead.yaml: Homestead.yaml)
+		networks:
+		  - type: "public_network"
+		    ip: "192.168.15.100"
+
+	# Homestead
+	192.168.15.100	sample.local
+
+- Reiniciar o serviço do bind9:
+
+	sudo service bind9 restart
+	sudo service bind9 status
+</pre>
