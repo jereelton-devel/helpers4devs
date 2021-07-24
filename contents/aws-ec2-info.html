@@ -4,3 +4,119 @@
 <hr />
 
 <h2>Sobre</h2>
+
+<p>
+    Criar conta na Amazon AWS e uma instância EC2 pararodar uma aplicação web ou simplesmente ter uma maquina em CLOUD.
+</p>
+
+<hr />
+
+<h2>Requisitos</h2>
+
+<ul>
+    <li>Ter uma conta criada e aprovada e ativa na AWS</li>
+    <li>Escolher a zona corretamente: nesse caso sa-east-1c</li>
+    <li>Conhecimentos em Linux (Ubuntu 20.04)</li>
+</ul>
+
+<hr />
+
+<h2>Instancia EC2</h2>
+
+<h3>Criando uma instancia</h3>
+
+<p>
+    - Para criar uma instancia no console de gerenciamento da AWS, primeiro faça login na conta, após isso procure por EC2
+    Virtual Servers in the Cloud no caixa de pesquisa principal da plataforma.
+</p>
+
+<p>
+    - Ao acessar o painel/console de instancias, procure pelo botão Executar Instancias, Selecione o sistema operacional
+    a ser usado para gerar a maquina virtual em Cloud, nesse caso selecione Ubuntu Server 20.04 LTS e logo apos clique
+    em Selecionar.
+</p>
+
+<small>Exemplo</small>
+<pre>
+    Ubuntu Server 20.04 LTS (HVM), SSD Volume Type - ami-054a31f1b3bf90920 (64 bits x86) / ami-0c9c4f3290bbba7b4 (64 bits Arm)
+    Ubuntu Server 20.04 LTS (HVM),EBS General Purpose (SSD) Volume Type. Support available from Canonical (http://www.ubuntu.com/cloud/services).
+    Tipo de dispositivo raiz: ebs Tipo de virtualização: hvm ENA habilitado: Sim
+</pre>
+
+<p>
+    - Na tela de escolha de tipo de instancia (tenha atenção em escolher recursos que se encaixem no nível gratuito:
+    qualificado para o nível gratuito), por exemplo:
+</p>
+
+<small>Exemplo</small>
+<pre>
+    Tipo: t2.micro
+    Armazenamento: Somente EBS
+</pre>
+
+<p>
+    - Após clique em Verificar e ativar, ou clique em Proximo para detalhar as configurações da instancia. Uma configuração
+    importante e que merece bastante atenção é a etapa de Armazenamento:
+</p>
+
+<small>Exemplo</small>
+<pre>
+    Tamanho (GiB): 20 (suficiente)
+    Tipo de volume: SSD (gp2)
+    Excluir no encerramento: (deixar marcado para evitar problemas com volumes ativos e cobranças)
+</pre>
+
+<p>
+    - Também é uma boa ideia adicionar uma tag para a instancia para ajudar na futura identificação da mesma:
+</p>
+
+<small>Exemplo</small>
+<pre>
+    name: ubuntu-server-test-230721
+</pre>
+
+<p>
+    - Na etapa Security Group você pode e deve configurar o acesso a instancia, seja por SSH, HTTP, FTP entre outros,
+    isso será util se por acaso você quiser acessar a instancia via ssh da sua maquina local:
+</p>
+
+<small>Exemplo</small>
+<pre>
+    #Regras de entrada
+    Intervalo de portas    Protocolo    Origem      Grupos de segurança
+    80	                   TCP	        0.0.0.0/0	launch-wizard-1
+    80	                   TCP	        ::/0	    launch-wizard-1
+    22	                   TCP	        0.0.0.0/0	launch-wizard-1
+
+    #Regras de saida
+    Intervalo de portas     Protocolo   Destino     Grupos de segurança
+    Todos	                Todos	    0.0.0.0/0	launch-wizard-1
+</pre>
+
+<p>
+    - Clicar em Verificar e ativar, você será direcionado para a tela de Review, basta revisar e clicar em Executar.
+</p>
+
+<p>
+    - Clicar em Verificar e ativar, você será direcionado para a tela de Review, basta revisar e clicar em Executar.
+</p>
+
+<p>
+    - Na tela final sera necessário gerar um novo par de chaves para acessar a instancia criada, ou utilizar alguma
+    ja existente.
+    <br />
+    - Clique em Executar instancias.
+</p>
+
+<p>
+    - Para se conectar via ssh execute o comando abaixo com os dados corretos:
+</p>
+
+<small>Exemplo</small>
+<pre>
+    # Verifique as instruções para se conectar a instancia clicando com o botão direito do mouse em cima da instancia
+    em conectar.
+
+    ssh -i "ubuntu-server-key-aws-ec-290421.pem" ubuntu@ec2-54-94-75-94.sa-east-1.compute.amazonaws.com
+    ssh -i "ubuntu-server-key-aws-ec-230721.pem" ubuntu@ec2-18-228-155-255.sa-east-1.compute.amazonaws.com
+</pre>
