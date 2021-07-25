@@ -1,36 +1,73 @@
 
-<h1>Docker + Docker Compose Helper</h1>
+<h1>DOCKER + DOCKER COMPOSE HELPER</h1>
 
 <hr />
 
-<h2>Instalar o Docker</h2>
+<h2>Sobre</h2>
+
+<p>
+    Criar um ambiente para desenvolvimento de aplicações com o docker, usar o docker-compose para gerenciar os containers
+    e ter mais de uma aplicação rodando no ambiente, porém sem uso de PHP, apenas aplicações estaticas HTML, CSS e JS.
+</p>
+
+<hr />
+
+<h2>Requisitos</h2>
+
+<ul>
+    <li>Ubuntu 18.04 ou superior</li>
+    <li>Usuário root (sudo)</li>
+    <li>docker.io</li>
+    <li>docker-compose</li>
+</ul>
+
+<hr />
+
+<h2>Instalando o Docker</h2>
 
 <pre>
-sudo apt-get update
-sudo apt upgrade
-sudo apt-get dist-upgrade
-sudo apt install docker.io
+    sudo apt-get update
+    sudo apt upgrade
+    sudo apt-get dist-upgrade
+    sudo apt install docker.io
 </pre>
 
 <hr />
 
-<h2>Instalar o Docker para aplicações web no Ubuntu 20.04</h2>
-
-<h3>Instalação global do docker-compose</h3>
+<h2>Instalação global do Docker Compose</h2>
 
 <pre>
-sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-docker-compose --version
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+    docker-compose --version
 </pre>
 
-<h3>Configuração</h3>
+<hr />
+
+<h2>Configuração</h2>
+
+<h3>Preparando o ambiente</h3>
+
+<p>
+    - Criar as pastas e arquivos dos projetos, exemplo:
+</p>
 
 <pre>
-mkdir ~/compose-demo
-cd ~/compose-demo
-mkdir app
-touch app/index.html
+    mkdir /home/username/dockerdemo
+    cd /home/username/dockerdemo
+    mkdir app app2
+    touch app/index.html
+    touch app2/index.html
+</pre>
+
+<p>
+    <span>
+        <strong>NOTA:</strong> Troque [ por < e ] por > para ativar as tags html.
+    </span>
+</p>
+
+<pre>
+    #app/index.html
     [!doctype html]
     [html lang="en"]
     [head]
@@ -43,27 +80,62 @@ touch app/index.html
         [h1]This is a Docker Compose Demo Page.[/h1]
         [p]This content is being served by an Nginx container.[/p]
 
+        [p][a href="http://localhost:8989"]App2[/a][/p]
+
     [/body]
     [/html]
-touch docker-compose.yml
-version: '3.7'
-services:
-  web:
-    image: nginx:latest
-    ports:
-      - "8888:80"
-    volumes:
-      - ./app:/usr/share/nginx/html
 </pre>
 
-<h3>Executando</h3>
+<pre>
+    #app2/index.html
+    [!doctype html]
+    [html lang="en"]
+    [head]
+        [meta charset="utf-8"]
+        [title]App2: Docker Compose Demo[/title]
+        [link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/dark.min.css"]
+    [/head]
+    [body]
+
+        [h1]App2: This is a Docker Compose Demo Page.[/h1]
+        [p]This content is being served by an Nginx container.[/p]
+
+        [p][a href="http://localhost:8888"]App2[/a][/p]
+
+    [/body]
+    [/html]
+</pre>
+
+<p>
+    - Criar o arquivo docker-compose.yml, responsavel por montar o ambiente do projeto, exemplo:
+</p>
+
+<pre>
+    #docker-compose.yml
+    version: '3.7'
+    services:
+      web:
+        image: nginx:latest
+        ports:
+          - "8888:80"
+        volumes:
+          - ./app:/usr/share/nginx/html
+      web2:
+        image: nginx:latest
+        ports:
+          - "8989:80"
+        volumes:
+          - ./app2:/usr/share/nginx/html
+</pre>
+
+<h3>Executando o ambiente</h3>
 
 <pre>
 docker-compose up -d
 docker-compose ps
 </pre>
 
-<h3>Acesso</h3>
+<h3>Acessando o ambiente via browser</h3>
 
 <pre>
 http://localhost:8888 (LOCAL)
@@ -73,10 +145,14 @@ http://dockerdemo.app1:8888 (VIRTUAL HOSTS)
 
 <hr />
 
-<h2>Docker NGINX PROXY MANAGER</h2>
+<h2>DOCKER NGINX PROXY MANAGER</h2>
+
+<p>
+    - Este é um projet especial para casos onde é necessário utilizar o Let's Encrypt.
+</p>
 
 <pre>
-sudo apt install docker-compose
+    sudo apt install docker-compose
 </pre>
 
 <h3>Configurações</h3>
@@ -86,49 +162,54 @@ sudo apt install docker-compose
 <h4>Criar o arquivo docker-compose.yml dentro de algum diretorio de facil acesso</h4>
 
 <pre>
-mkdir -p /home/usuario/dockers/
-cd /home/usuario/dockers/
-touch docker-compose.yml
+    mkdir -p /home/username/dockers/
+    cd /home/username/dockers/
+    touch docker-compose.yml
 </pre>
 
 <pre>
-[docker-compose.yml]
-version: '3'
-services:
-  app:
-    image: 'jc21/nginx-proxy-manager:latest'
-    ports:
-      - '80:80'
-      - '81:81'
-      - '443:443'
-    environment:
-      DB_MYSQL_HOST: "db"
-      DB_MYSQL_PORT: 3306
-      DB_MYSQL_USER: "npm"
-      DB_MYSQL_PASSWORD: "npm"
-      DB_MYSQL_NAME: "npm"
-    volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
-  db:
-    image: 'jc21/mariadb-aria:latest'
-    environment:
-      MYSQL_ROOT_PASSWORD: 'npm'
-      MYSQL_DATABASE: 'npm'
-      MYSQL_USER: 'npm'
-      MYSQL_PASSWORD: 'npm'
-    volumes:
-      - ./data/mysql:/var/lib/mysql
+    #docker-compose.yml
+    version: '3'
+    services:
+      app:
+        image: 'jc21/nginx-proxy-manager:latest'
+        ports:
+          - '80:80'
+          - '81:81'
+          - '443:443'
+        environment:
+          DB_MYSQL_HOST: "db"
+          DB_MYSQL_PORT: 3306
+          DB_MYSQL_USER: "npm"
+          DB_MYSQL_PASSWORD: "npm"
+          DB_MYSQL_NAME: "npm"
+        volumes:
+          - ./data:/data
+          - ./letsencrypt:/etc/letsencrypt
+      db:
+        image: 'jc21/mariadb-aria:latest'
+        environment:
+          MYSQL_ROOT_PASSWORD: 'npm'
+          MYSQL_DATABASE: 'npm'
+          MYSQL_USER: 'npm'
+          MYSQL_PASSWORD: 'npm'
+        volumes:
+          - ./data/mysql:/var/lib/mysql
 </pre>
 
-<h4>Build do docker NGINX PROXY MANAGER</h4>
+<h3>Build do DOCKER NGINX PROXY MANAGER</h3>
 
 <pre>
-sudo docker-compose up -d
-sudo docker ps
-http://localhost:81
+    sudo docker-compose up -d
+    sudo docker ps
+</pre>
 
-#Dado para acesso
-Email:    admin@example.com
-Password: changeme
+<h3>Acessando o ambiente</h3>
+
+<pre>
+    http://localhost:81
+
+    #Dado para acesso
+    Email:    admin@example.com
+    Password: changeme
 </pre>

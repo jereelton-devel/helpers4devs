@@ -1,6 +1,105 @@
 
-<h1>AWS ROUTE 53</h1>
+<h1>AWS ROUTE 53 HELPER</h1>
 
 <hr />
 
 <h2>Sobre</h2>
+
+<p>
+    Criar um roteamento para um dominio qualquer na web.
+</p>
+
+<hr />
+
+<h2>Requisitos</h2>
+
+<ul>
+    <li>Ter uma conta criada e aprovada e ativa na AWS</li>
+    <li>Escolher a zona corretamente: nesse caso sa-east-1c</li>
+    <li>Ter uma instancia EC2 previamente criada</li>
+    <li>Ter um IP Elastico reservado e associado a instancia EC2</li>
+    <li>Ter um dominio valido, ativo e hospedado na web</li>
+    <li>Dados dos servidores DNS onde foi registrado o dominio</li>
+    <li>Ter uma inbound rules configurada como HTTP|TCP|80|Anywhere</li>
+</ul>
+
+<hr />
+
+<h2>Route 53</h2>
+
+<h3>Configuração</h3>
+
+<p>
+    - Para iniciar a configuração do Route 53, tenha em mãos os dados sobre o dominio que será cadastrado e roteado para
+    responder a requisições por seu dominio, exemplo:
+</p>
+
+<pre>
+    #DNS na AWS
+    ns-1234.awsdns-00.org
+    ns-1234.awsdns-00.co.uk
+    ns-1234.awsdns-00.com
+    ns-1234.awsdns-00.net
+
+    #DNS no servidor de hospedagem/registro
+    ns1.dns-parking.com
+</pre>
+
+<p>
+    - No console de gerenciamento da AWS procure Route 53 e clique para abrir o Painel do Route 53:
+    <br />
+    - Caso você tenha alguma zona hospedada no Route 53, clique no link "Zona hospedada", para acessar as opções de
+    gerenciamento da zona, sendo que nessa tela é possivel criar um nova zona ou editar uma ja existente. Você também
+    pode usar o menu na lateral esquerda da tela "Zonas hospedadas" para acessar essa tela.
+    <br />
+    - Tanto no caso anterior, como no caso de ser a primeira zona a ser criada, Clique no botão "Criar zona hospedada".
+    <br />
+    - Na tela de criação da zona, informe o nome do dominio, comentario e tipo (publico).
+    <br />
+    - Ao clicar em Criar você será direcionado para a tela da zona/dominio criada, na qual é possível realizar as
+    configurações necessárias para ativar o roteamento para a mesma.
+    <br />
+    - Clique em Criar registro para ser direcionado para a tela de configuração do registro/dominio a ser roteado.
+    <br />
+    - Preencha nome de registro, escolha o tipo de registro, em valor coloque o IP(ou IP Elastico) da máquina
+    que esta em cloud na AWS, TTL e Politica de roteamento, por exemplo:
+</p>
+
+<pre>
+    Nome do registro: seudomino.com ou seudominio.com
+    Tipo de registro: A – roteia o tráfego para um endereço IPv4 e alguns recursos da AWS
+    Valor: 54.51.92.190
+    TTL: 300 (segundos)
+    Politica de roteamento: Roteamento simples
+</pre>
+
+<pre>
+    Nome do registro: seudomino.com ou www.seudominio.com
+    Tipo de registro: CNAME – roteia o tráfego para outro nome de domínio e para alguns recursos da AWS
+    Valor: seudominio.com
+    TTL: 300 (segundos)
+    Politica de roteamento: Roteamento simples
+</pre>
+
+<p>
+    - Obter os dados referente ao DNS da AWS para inserir no seu servidor de hospedagem ou registro, por exemplo:
+</p>
+
+<pre>
+    ns-1234.awsdns-00.org
+    ns-1234.awsdns-00.co.uk
+    ns-1234.awsdns-00.com
+    ns-1234.awsdns-00.net
+</pre>
+
+<p>
+    - Ir no seu serviço de hospedagem ou registro, painel de gerenciamento de DNS e inserir um por um dos DNS informados
+    pela AWS.
+</p>
+
+<p>
+    <span>
+        <strong>NOTA:</strong> Talvez seja necessário aguardar alguns instantes para que o redirecionamento e
+        ativação do recurso entre em vigor.
+    </span>
+</p>

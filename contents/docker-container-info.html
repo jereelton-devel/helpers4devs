@@ -1,3 +1,131 @@
+
+<h1>DOCKER CONTAINER HELPER</h1>
+
+<hr />
+
+<h2>Sobre</h2>
+
+<p>
+    Criar um container com docker.
+</p>
+
+<hr />
+
+<h2>Requisitos</h2>
+
+<ul>
+    <li>Ubuntu 20.04 ou superior</li>
+    <li>Usuario root (sudo)</li>
+    <li>Conhecimentos em Linux</li>
+</ul>
+
+<hr />
+
+<h2>Instalando o docker</h2>
+
+<h3>Atualização e Instalação</h3>
+
+<pre>
+    sudo apt update
+    sudo apt install apt-transport-https ca-certificates curl software-properties-common
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+    sudo apt update
+</pre>
+
+<p>
+    - Certifique-se de que você está prestes a instalar do repositório do Docker ao invés do repositório padrão do Ubuntu:
+</p>
+
+<pre>
+    apt-cache policy docker-ce
+</pre>
+
+<pre>
+    docker-ce:
+        Installed: (none)
+        Candidate: 5:19.03.9~3-0~ubuntu-focal
+        Version table:
+        5:19.03.9~3-0~ubuntu-focal 500
+            500 https://download.docker.com/linux/ubuntu focal/stable amd64 Packages
+</pre>
+
+<pre>
+    sudo apt install docker-ce
+    sudo systemctl status docker
+</pre>
+
+<h3>Configurações Extras</h3>
+
+<p>
+    - Adicionar o usuario ao grupo docker para evitar o uso de sudo:
+</p>
+
+<pre>
+    sudo usermod -aG docker ${USER}
+    su - ${USER}
+    id -nG
+</pre>
+
+<h3>Comandos e Atalhos</h3>
+
+<p>
+    - Executar um container qualquer:
+</p>
+
+<pre>
+    docker run hello-world
+</pre>
+
+<p>
+    - Buscar uma imagem no docker hub:
+</p>
+
+<pre>
+    docker search ubuntu
+</pre>
+
+<p>
+    - Baixar uma imagem:
+</p>
+
+<pre>
+    docker pull ubuntu
+</pre>
+
+<p>
+    - Listar imagens que foram baixadas:
+</p>
+
+<pre>
+    docker images
+
+    #Output
+    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+    ubuntu              latest              1d622ef86b13        3 weeks ago         73.9MB
+    hello-world         latest              bf756fb1ae65        4 months ago        13.3kB
+</pre>
+
+<p>
+    - Executar um container via terminal:
+</p>
+
+<pre>
+    docker run -it ubuntu ou docker exec -it ubuntu /bin/bash
+
+    #Output
+    root@d9b100f2f636:/#
+</pre>
+
+
+Passo 6 — Gerenciando os Containers do Docker
+
+
+
+
+
+
+
 <pre>
 
     Conteudo copiado de: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04-pt

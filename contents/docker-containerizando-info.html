@@ -1,0 +1,134 @@
+
+<h1>Docker + Docker Compose Helper</h1>
+
+<hr />
+
+<h2>Instalar o Docker</h2>
+
+<pre>
+sudo apt-get update
+sudo apt upgrade
+sudo apt-get dist-upgrade
+sudo apt install docker.io
+</pre>
+
+<hr />
+
+<h2>Instalar o Docker para aplicações web no Ubuntu 20.04</h2>
+
+<h3>Instalação global do docker-compose</h3>
+
+<pre>
+sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+</pre>
+
+<h3>Configuração</h3>
+
+<pre>
+mkdir ~/compose-demo
+cd ~/compose-demo
+mkdir app
+touch app/index.html
+    [!doctype html]
+    [html lang="en"]
+    [head]
+        [meta charset="utf-8"]
+        [title]Docker Compose Demo[/title]
+        [link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/dark.min.css"]
+    [/head]
+    [body]
+
+        [h1]This is a Docker Compose Demo Page.[/h1]
+        [p]This content is being served by an Nginx container.[/p]
+
+    [/body]
+    [/html]
+touch docker-compose.yml
+version: '3.7'
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8888:80"
+    volumes:
+      - ./app:/usr/share/nginx/html
+</pre>
+
+<h3>Executando</h3>
+
+<pre>
+docker-compose up -d
+docker-compose ps
+</pre>
+
+<h3>Acesso</h3>
+
+<pre>
+http://localhost:8888 (LOCAL)
+http://192.168.15.13 (REMOTO)
+http://dockerdemo.app1:8888 (VIRTUAL HOSTS)
+</pre>
+
+<hr />
+
+<h2>Docker NGINX PROXY MANAGER</h2>
+
+<pre>
+sudo apt install docker-compose
+</pre>
+
+<h3>Configurações</h3>
+
+<p>Seguindo o link https://nginxproxymanager.com/#quick-setup</p>
+
+<h4>Criar o arquivo docker-compose.yml dentro de algum diretorio de facil acesso</h4>
+
+<pre>
+mkdir -p /home/usuario/dockers/
+cd /home/usuario/dockers/
+touch docker-compose.yml
+</pre>
+
+<pre>
+[docker-compose.yml]
+version: '3'
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    environment:
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "npm"
+      DB_MYSQL_NAME: "npm"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+  db:
+    image: 'jc21/mariadb-aria:latest'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'npm'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: 'npm'
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+</pre>
+
+<h4>Build do docker NGINX PROXY MANAGER</h4>
+
+<pre>
+sudo docker-compose up -d
+sudo docker ps
+http://localhost:81
+
+#Dado para acesso
+Email:    admin@example.com
+Password: changeme
+</pre>
