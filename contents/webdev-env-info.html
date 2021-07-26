@@ -1,611 +1,816 @@
 
-<h1>baseknowledge</h1>
-A intenção desse repositório é compor a base para criação de um projeto futuro baseado em webdev
+<h1>WEBDEV ENV HELPER</h1>
 
 <hr />
 
-<h2>Especificações</h2>
+<h2>Sobre</h2>
 
-* Linux Ubuntu 20.04 LTS
-* Homestead v10.17.0, v11.4.0
-* Settler v9.7.2 (Ubuntu 18.04)
-* Settler v10.1.1 (Ubuntu 20.04)
-* Laravel 7.25.0 ou superior
-* PHP 7.4 ou superior
-* Banco de dados: MSSQL, MYSQL, PGSQL
+<p>
+	A intenção desse artigo é demonstrar uma base para criação de um projeto futuro baseado
+	em um ambiente para desenvolvimento web completo usando o Laravel como framework PHP.
+</p>
 
 <hr />
 
-<h2>Utilizar somente o Vagrant</h2>
+<h2>Requisitos</h2>
 
-<h6>NOTA: Considere o Vagrant já instalado e pronto para uso</h6>
-
-<pre>
-#Preparar local de trabalho
-cd ~/
-mkdir Vagrant
-cd ~/Vagrant/
-mkdir homestead
-cd homestead/
-
-#Configurar parametros para iniciar o vagrant
-vagrant init laravel/homestead
-sublime-text.subl Vagrantfile = config.vm.network "public_network"
-vagrant up
-
-#local da VM no Virtual Box: 6.4GB
-/home/jereelton/VirtualBox VMs/homestead_default_1613166504062_71666
-
-#local da imagem baixada com vagrant: 1.8GB
-/home/jereelton/.vagrant.d/boxes/laravel-VAGRANTSLASH-homestead/11.0.0/virtualbox
-
-#local onde ficam os arquivos e configurações da maquina
-/home/jereelton/Vagrant/homestead/.vagrant/machines/default/virtualbox
-</pre>
+<ul>
+	<li>Linux Ubuntu 20.04 LTS</li>
+	<li>Homestead v10.17.0, v11.4.0</li>
+	<li>Settler v9.7.2 (Ubuntu 18.04)</li>
+	<li>Settler v10.1.1 (Ubuntu 20.04)</li>
+	<li>Laravel 7.25.0 ou superior</li>
+	<li>PHP 7.4 ou superior</li>
+	<li>Banco de dados: MSSQL, MYSQL, PGSQL</li>
+	<li>Usuário root (sudo)</li>
+</ul>
 
 <hr />
 
-<h2>Instalação do Homestead e Vagrant</h2>
+<h2>Procedimentos</h2>
 
-<h4>Instalar o gerenciador de pacotes/dependencias composer</h4>
-<pre>sudo apt-get install composer</pre>
+<h3>Utilizando somente o Vagrant</h3>
 
-<h4>Instalar o gerenciador de VM Vagrant para ser usado junto com o virtualbox</h4>
-<pre>sudo apt-get install vagrant</pre>
+<p>
+	<strong>
+		NOTA: Considere o Vagrant já instalado e pronto para uso
+	</strong>
+</p>
 
-<h4>Baixar a imagem da VM referente, no caso o ambiente homestead para laravel</h4>
+<p>
+	-Preparar local de trabalho
+</p>
+
 <pre>
-vagrant box add laravel/homestead
-2) virtualbox (provider)
-==> box: Successfully added box 'laravel/homestead' (v11.0.0) for 'virtualbox'!
-/home/jereelton/Homestead/ "(nada nessa pasta)"
-/home/jereelton/Vagrant/homestead/ "(nada nessa pasta)"
-/home/jereelton/VirtualBox VMs/ "(nada nessa pasta)"
-/home/jereelton/.vagrant.d/boxes/laravel-VAGRANTSLASH-homestead/11.0.0/virtualbox/ "(local da imagem baixada com vagrant: 1.8GB)"
+	cd ~/
+	mkdir Vagrant
+	cd ~/Vagrant/
+	mkdir homestead
+	cd homestead/
 </pre>
 
-<h4>Clonar o projeto homestead da laravel e configurar o ambiente</h4>
-<h6>NOTA: Repare que o local de instalação do projeto é na home do usuário</h6>
-<pre>git clone https://github.com/laravel/homestead.git ~/Homestead</pre>
+<p>
+	- Configurar parametros para iniciar o vagrant
+</p>
 
-<h4>Acessar a pasta do projeto</h4>
-<pre>cd ~/Homestead/</pre>
-
-<h4>Mudar para a branch release do repositorio laravel/homestead</h4>
-<pre>git checkout release</pre>
-
-<h4>Inicializar o homestead</h4>
-<h6>NOTA: Esse procedimento gera um arquivo Homestead.yaml na raiz do projeto</h6>
-<pre>bash init.sh</pre>
-
-<h4>Gerar a chave publica para o ambiente homestead</h4>
 <pre>
-ssh-keygen
-Generating public/private rsa key pair.
-Enter file in which to save the key (/home/jereelton/.ssh/id_rsa): /home/jereelton/.ssh/id_rsa_homestead
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
-Your identification has been saved in /home/jereelton/.ssh/id_rsa_homestead
-Your public key has been saved in /home/jereelton/.ssh/id_rsa_homestead.pub
-The key fingerprint is:
-SHA256:vSlzwxINgpXBSD123456YpLDGVUn35E+2+DdyKMaaU4 jereelton@jereelton-ubuntu-desktop
-The keys randomart image is:
-+---[RSA 3072]----+
-|.+.++Oo+ ..      |
-|+o= =o* ...      |
-|*+xytp..o.       |
-|oo     . B       |
-|        S X o    |
-|        .= O .   |
-|       E+ B .    |
-|      + .* .     |
-|       o.        |
-+----[SHA256]-----+
-jereelton@jereelton-ubuntu-desktop:~/Homestead$ ls -ltr ~/.ssh/
-total 24
--rw-r--r-- 1 jereelton jereelton  573 jan  9 17:36 id_rsa_ubuntu_desktop_devel.pub
--rw------- 1 jereelton jereelton 2655 jan  9 17:36 id_rsa_ubuntu_desktop_devel
--rw-r--r-- 1 jereelton jereelton  270 jan  9 17:39 config
--rw-r--r-- 1 jereelton jereelton 3316 fev 11 22:46 known_hosts
--rw-r--r-- 1 jereelton jereelton  588 fev 12 20:20 id_rsa_homestead.pub
--rw------- 1 jereelton jereelton 2622 fev 12 20:20 id_rsa_homestead
+	vagrant init laravel/homestead
+	sublime-text.subl Vagrantfile = config.vm.network "public_network"
+	vagrant up
 </pre>
 
-<h4>Configurar arquivo</h4>
-<h6>NOTA: Use um editor de texto qualquer</h6>
 <pre>
-sublime-text.subl Homestead.yaml
-[*****************************************EXEMPLO*************************************]
+	# local da VM no Virtual Box: 6.4GB
+	/home/jereelton/VirtualBox VMs/homestead_default_1613166504062_71666
+
+	#local da imagem baixada com vagrant: 1.8GB
+	/home/jereelton/.vagrant.d/boxes/laravel-VAGRANTSLASH-homestead/11.0.0/virtualbox
+
+	#local onde ficam os arquivos e configurações da maquina
+	/home/jereelton/Vagrant/homestead/.vagrant/machines/default/virtualbox
+</pre>
+
+<h3>Instalação do Homestead + Vagrant</h3>
+
+<p>
+	- Instalar o gerenciador de pacotes/dependencias composer
+</p>
+
+<pre>
+	sudo apt-get install composer
+</pre>
+
+<p>
+	- Instalar o gerenciador de VM Vagrant para ser usado junto com o virtualbox
+</p>
+
+<pre>
+	sudo apt-get install vagrant
+</pre>
+
+<p>
+	- Baixar a imagem da VM referente, no caso o ambiente homestead para laravel
+</p>
+
+<pre class="terminal-style">
+	vagrant box add laravel/homestead
+	2) virtualbox (provider)
+	==> box: Successfully added box 'laravel/homestead' (v11.0.0) for 'virtualbox'!
+	/home/jereelton/Homestead/ "(nada nessa pasta)"
+	/home/jereelton/Vagrant/homestead/ "(nada nessa pasta)"
+	/home/jereelton/VirtualBox VMs/ "(nada nessa pasta)"
+	/home/jereelton/.vagrant.d/boxes/laravel-VAGRANTSLASH-homestead/11.0.0/virtualbox/ "(local da imagem baixada com vagrant: 1.8GB)"
+</pre>
+
+<p>
+	- Clonar o projeto homestead da laravel e configurar o ambiente
+</p>
+
+<p>
+	<strong>
+		NOTA: Repare que o local de instalação do projeto é na home do usuário
+	</strong>
+</p>
+
+<pre>
+	git clone https://github.com/laravel/homestead.git ~/Homestead
+</pre>
+
+<p>
+	- Acessar a pasta do projeto
+</p>
+
+<pre>
+	cd ~/Homestead/
+</pre>
+
+<p>
+	- Mudar para a branch release do repositorio laravel/homestead
+</p>
+
+<pre>
+	git checkout release
+</pre>
+
+<p>
+	- Inicializar o homestead
+</p>
+
+<p>
+	<strong>
+		NOTA: Esse procedimento gera um arquivo Homestead.yaml na raiz do projeto
+	</strong>
+</p>
+
+<pre>
+	bash init.sh
+</pre>
+
+<p>
+	- Gerar a chave publica para o ambiente homestead
+</p>
+
+<pre class="terminal-style">
+	ssh-keygen
+	Generating public/private rsa key pair.
+	Enter file in which to save the key (/home/jereelton/.ssh/id_rsa): /home/jereelton/.ssh/id_rsa_homestead
+	Enter passphrase (empty for no passphrase):
+	Enter same passphrase again:
+	Your identification has been saved in /home/jereelton/.ssh/id_rsa_homestead
+	Your public key has been saved in /home/jereelton/.ssh/id_rsa_homestead.pub
+	The key fingerprint is:
+	SHA256:vSlzwxINgpXBSD123456YpLDGVUn35E+2+DdyKMaaU4 jereelton@jereelton-ubuntu-desktop
+	The keys randomart image is:
+	+---[RSA 3072]----+
+	|.+.++Oo+ ..      |
+	|+o= =o* ...      |
+	|*+xytp..o.       |
+	|oo     . B       |
+	|        S X o    |
+	|        .= O .   |
+	|       E+ B .    |
+	|      + .* .     |
+	|       o.        |
+	+----[SHA256]-----+
+	jereelton@jereelton-ubuntu-desktop:~/Homestead$ ls -ltr ~/.ssh/
+	total 24
+	-rw-r--r-- 1 jereelton jereelton  573 jan  9 17:36 id_rsa_ubuntu_desktop_devel.pub
+	-rw------- 1 jereelton jereelton 2655 jan  9 17:36 id_rsa_ubuntu_desktop_devel
+	-rw-r--r-- 1 jereelton jereelton  270 jan  9 17:39 config
+	-rw-r--r-- 1 jereelton jereelton 3316 fev 11 22:46 known_hosts
+	-rw-r--r-- 1 jereelton jereelton  588 fev 12 20:20 id_rsa_homestead.pub
+	-rw------- 1 jereelton jereelton 2622 fev 12 20:20 id_rsa_homestead
+</pre>
+
+<p>
+	- Configurar o arquivo Homestead.yaml
+</p>
+
+<p>
+	<strong>
+		NOTA: Use um editor de texto qualquer, exemplo: sublime-text
+	</strong>
+</p>
+
+<pre>
 ---
 ip: "192.168.10.10"
 memory: 2048
 cpus: 2
 provider: virtualbox
 
-		authorize: ~/.ssh/id_rsa_homestead.pub
+	authorize: ~/.ssh/id_rsa_homestead.pub
 
-		keys:
-		    - ~/.ssh/id_rsa_homestead
+	keys:
+		- ~/.ssh/id_rsa_homestead
 
-		folders:
-		    - map: ~/Devel/laravel/exemplo
-		      to: /home/vagrant/code/exemplo
+	folders:
+		- map: ~/Devel/laravel
+		  to: /home/vagrant/code/laravel
 
-		    - map: ~/Devel/laravel/joticode
-		      to: /home/vagrant/code/joticode
+		- map: ~/Devel/sample
+		  to: /home/vagrant/code/sample
 
-		    - map: ~/Devel/laravel/joinner
-		      to: /home/vagrant/code/joinner
+	sites:
+		- map: sample.local
+		  to: /home/vagrant/code/sample
 
-		sites:
-		    - map: exemplo.local
-		      to: /home/vagrant/code/exemplo
+		- map: laravel.local
+		  to: /home/vagrant/code/laravel/public
 
-		    - map: joticode.local
-		      to: /home/vagrant/code/joticode/public
+	databases:
+		- homestead
 
-		    - map: joinner.test
-		      to: /home/vagrant/code/joinner/public
+	features:
+		- mysql: false
+		- mariadb: false
+		- postgresql: false
+		- ohmyzsh: false
+		- webdriver: false
 
-		databases:
-		    - homestead
+	#services:
+	#    - enabled:
+	#        - "postgresql@12-main"
+	#    - disabled:
+	#        - "postgresql@11-main"
 
-		features:
-		    - mysql: false
-		    - mariadb: false
-		    - postgresql: false
-		    - ohmyzsh: false
-		    - webdriver: false
-
-		#services:
-		#    - enabled:
-		#        - "postgresql@12-main"
-		#    - disabled:
-		#        - "postgresql@11-main"
-
-		# ports:
-		#     - send: 50000
-		#       to: 5000
-		#     - send: 7777
-		#       to: 777
-		#       protocol: udp
-	[*******************************************************************************************]
+	# ports:
+	#     - send: 50000
+	#       to: 5000
+	#     - send: 7777
+	#       to: 777
+	#       protocol: udp
 </pre>
 
-<h4>Definir resolução de nomes para os sites/projetos dentro do homestead</h4>
+<p>
+	- Definir resolução de nomes para os sites/projetos dentro do homestead
+</p>
+
 <pre>
-configurar /etc/hosts
-192.168.10.10	joinner.test
+	#configurar /etc/hosts
+	192.168.10.10	test.local
 </pre>
 
-<h4>Inicializar o ambiente com o vagrant</h4>
-<h6>NOTA: Nesse ponto a imagem baixada pelo vagrant é incorporada ao virtualbox</h6>
+<p>
+	- Inicializar o ambiente com o vagrant
+</p>
+
+<p>
+	<strong>
+		NOTA: Nesse ponto a imagem baixada pelo vagrant é incorporada ao virtualbox
+	</strong>
+</p>
+
 <pre>
-vagrant up --provision
-
-#local onde ficam os arquivos e configurações da maquina
-/home/jereelton/Homestead/.vagrant/machines/homestead/virtualbox/
-
-#local da imagem baixada com vagrant: 1.8GB
-/home/jereelton/.vagrant.d/boxes/laravel-VAGRANTSLASH-homestead/11.0.0/virtualbox/
-
-#local da VM no Virtual Box: 6.4GB
-/home/jereelton/VirtualBox VMs/homestead/
+	vagrant up --provision
 </pre>
 
-<h4>EXTRAS: Comandos para auxiliar no vagrant</h4>
 <pre>
-vagrant halt  => "Desligar VM"
-vagrant ssh ou ssh vagrant@192.168.10.10 => "Acesso via ssh na VM"
-vagrant resume => "Continuar VM pausada"
-vagrant reload --provision => "Reinciiar VM"
-vagrant destroy ff40a74 (id) => "Remover VM"
-vagrant global-status => "Verificar status e ids das VMs"
+	#local onde ficam os arquivos e configurações da maquina
+	/home/jereelton/Homestead/.vagrant/machines/homestead/virtualbox/
+
+	#local da imagem baixada com vagrant: 1.8GB
+	/home/jereelton/.vagrant.d/boxes/laravel-VAGRANTSLASH-homestead/11.0.0/virtualbox/
+
+	#local da VM no Virtual Box: 6.4GB
+	/home/jereelton/VirtualBox VMs/homestead/
 </pre>
 
-* Configuração Do Ambiente Homestead Finalizado!
+<h3>EXTRAS: Comandos para auxiliar no vagrant</h3>
+
+<pre>
+	vagrant halt  => "Desligar VM"
+	vagrant ssh ou ssh vagrant@192.168.10.10 => "Acesso via ssh na VM"
+	vagrant resume => "Continuar VM pausada"
+	vagrant reload --provision => "Reinciiar VM"
+	vagrant destroy ff40a74 (id) => "Remover VM"
+	vagrant global-status => "Verificar status e ids das VMs"
+</pre>
+
+<p>
+	<strong>
+		Configuração Do Ambiente Homestead Finalizado!
+	</strong>
+<p>
+
+<br />
 
 <hr />
 
 <h2>Migrar o Laravel: 5.4.0 para 7.25.0</h2>
 
->
-> <strong>NOTA</strong>
-> <br />
-> O Processo de migração esta documentado no site https://laravel.com/docs/7.x/upgrade
-> <br />
-> Deve se atentar a versão utilizada e a versão que pretende migrar, exemplo: da 5 para 7
->
+<br />
 
-<h4>Configurar composer.json como esta no git do projeto referente a versão alvo</h4>
-<pre>https://github.com/laravel/laravel/blob/v7.25.0/composer.json</pre>
+<p>
+	<strong>
+		NOTA: O Processo de migração esta documentado no site https://laravel.com/docs/7.x/upgrade
+	</strong>
+</p>
 
-<h4>Ajustar scripts de acordo com a especificação na página da laravel</h4>
+<p>
+	<strong>
+		NOTA: Deve se atentar a versão utilizada e a versão que pretende migrar, exemplo: da 5 para 7
+	</strong>
+</p>
+
+<h3>Configurar composer.json como esta no git do projeto referente a versão alvo</h3>
+
+<p>
+	- Ver referencia/exemplo abaixo para a versão v7.25.0
+</p>
+
 <pre>
-#URL
-https://laravel.com/docs/7.x/upgrade#symfony-5-related-upgrades
-
-#Ajustes
-composer require laravel/ui "^2.0"
-'secure' => env('SESSION_SECURE_COOKIE', null),
-use Throwable;
-public function report(Throwable $exception);
-public function shouldReport(Throwable $exception);
-public function render($request, Throwable $exception);
-public function renderForConsole($output, Throwable $exception);
-
-#Executar atualização do projeto via composer
-composer update
-
-#Verificar a versão do laravel
-php artisan --version
+	https://github.com/laravel/laravel/blob/v7.25.0/composer.json
 </pre>
 
-* Com esses passos é possível migrar da versão 5.4 para a versão 7.25.0
+<h3>Ajustar scripts de acordo com a especificação na página da laravel</h3>
+
+<pre>
+	#URL
+	https://laravel.com/docs/7.x/upgrade#symfony-5-related-upgrades
+
+	#Alguns Ajustes necessários
+	composer require laravel/ui "^2.0"
+	'secure' => env('SESSION_SECURE_COOKIE', null),
+	use Throwable;
+	public function report(Throwable $exception);
+	public function shouldReport(Throwable $exception);
+	public function render($request, Throwable $exception);
+	public function renderForConsole($output, Throwable $exception);
+
+	#Executar atualização do projeto via composer
+	composer update
+
+	#Verificar a versão do laravel
+	php artisan --version
+</pre>
+
+<p>
+	<strong>
+		Com esses passos é possível migrar da versão 5.4 para a versão 7.25.0
+	</strong>
+</p>
 
 <hr />
 
 <h2>Instalação limpa do Laravel</h2>
 
-<h6>NOTA: Para instalar a versão mais recente do laravel</h6>
+<p>
+	<strong>
+		NOTA: Para instalar a versão mais recente do laravel
+	</strong>
+</p>
+
+<h3>Instalando o Laravel</h3>
+
 <pre>
-composer global require laravel/installer
-laravel new blog
+	composer global require laravel/installer
+	laravel new blog
 </pre>
 
-<h2>Usar uma versão especifica do laravel</h2>
-<h6>NOTA: Para iniciar a instalação de uma versão especifica</h6>
+<h3>Instalar uma versão especifica do laravel</h3>
+
 <pre>
-composer create-project --prefer-dist laravel/laravel:^7.25 .
+	composer create-project --prefer-dist laravel/laravel:^7.25 .
 </pre>
 
-<h2>Configurar o projeto criado com laravel</h2>
+<h3>Configurar o projeto laravel criado</h3>
 
-	<h4>Configurar um projeto</h4>
+<p>
+	- Configurar o projeto, acessar o local onde o projeto foi criado, exemplo
+</p>
 
-	<pre>
-#Acessar o local onde o projeto foi criado, exemplo:
-/home/jereelton/Devel/laravel/joinner/teste
-
-#Mover o arquivo ENV e edita-lo (configurações do projeto laravel)
-mv .env.example .env
-
-#Atualizar o projeto via composer
-composer update
-
-#Atualizar dependencias do projeto
-composer install
-
-#Atualizar a estrutura do autoload para mapear as novas dependencias
-composer dump-autoload
-
-#Gerar a chave de autenticação da aplicação
-php artisan key:generate
+<pre>
+	/home/jereelton/Devel/laravel/joinner/teste
 </pre>
 
-	<h4>Configurar o banco de dados</h4>
+<p>
+	- Mover o arquivo ENV e edita-lo (configurações do projeto laravel)
+</p>
 
-	> IMPORTANTE: Este processo serve apenas para os casos onde ainda não existe o banco de dados, ou casos onde uma nova instalação foi realizada.
-
-	* MYSQL
-	<pre>
-[CRIAR USUARIO DEDICADO]
-
-# Acessar o mysql como root ou homestead
-mysql -u root -p
-    Infome a senha:
-
-# Criar o usuario
-CREATE USER 'devel'@'localhost' IDENTIFIED BY '123mudar';
-CREATE USER 'devel'@'%' IDENTIFIED BY '123mudar';
-
-# Consultar usuario criado
-SELECT user, authentication_string, plugin, host FROM mysql.user;
-
-# Conceder privilegios ao usuario criado
-GRANT ALL PRIVILEGES ON *.* TO 'devel'@'localhost' WITH GRANT OPTION;
-
-# Caso necessario atualizar as concessões do novo usuário
-FLUSH PRIVILEGES;
-
-# Testar conexao com o novo usuario
-mysql -u devel -p
-    Infome a senha:
-
-# Criar a base de dados para o usuário/aplicação
-CREATE SCHEMA `db_laravel` DEFAULT CHARACTER SET utf8mb4;
-
-# Pode ser utilizado o Workbench ou DBeaver para gerenciar o Banco
+<pre>
+	mv .env.example .env
 </pre>
 
-	* MSSQL
-	<pre>
-[ESSA OPERAÇÃO UTILIZA O USUARIO PADRAO DO MSSQL (SA) E SENHA DEVEL (123Mudar$)]
+<p>
+	- Atualizar o projeto via composer
+</p>
 
-# Atualizar sistema
-sudo apt-get update
-sudo apt-get -y upgrade
-
-# Adicionar a chave publica de confiança da microsoft
-sudo wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-
-# Adicionar o repositorio da microsoft na lista do ubuntu
-sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/18.04/mssql-server-2019.list)"
-
-# Instalar o servidor MSSQL
-sudo apt install mssql-server
-
-# Configurar o MSSQL, licença de uso, senha etc...
-sudo /opt/mssql/bin/mssql-conf setup
-
-# Verificar se o serviço do mssql esta ativo
-systemctl status mssql-server.service
-
-# Adicionar chave publica de confiança da microsoft
-curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-
-# Obter lista de respositorio necessario da microsoft
-curl https://packages.microsoft.com/config/ubuntu/19.10/prod.list > mssql-release.list
-sudo cp mssql-release.list /etc/apt/sources.list.d/mssql-release.list
-
-# Aceitar e instalar a ferramenta sqlcmd de linha de comando para gerenciamento de banco
-sudo ACCEPT_EULA=Y apt install mssql-tools unixodbc-dev
-
-# Atualizar novamete o sistema apos configurar o ambiente para uso do MSSQL
-sudo apt update
-
-# Configurar a variavel de ambiente PATH para executar o sqlcmd (opcional)
-echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
-echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-source ~/.bashrc
-
-# Executar em CLI
-sqlcmd -S 127.0.0.1 -U SA
-
-# Nesse caso a base de dados foi criada pelo SGBD DBeaver
+<pre>
+	composer update
 </pre>
 
-	* PGSQL
-	<pre>
-[PARA TODOS OS USUARIOS A SENHA É PADRÃO (123mudar)]
+<p>
+	- Atualizar dependencias do projeto
+</p>
 
-# Instalar o postgres caso ainda nao tenhao instalado
-sudo apt-get install postgresql
-
-# Assumir o super usuario do postgres
-sudo su - postgres "acesso ao ambiente postgres"
-psql "para abrir o terminal CLI do postgres"
-
-# Adicionar um usuario para gerenciar o banco de dados
-CREATE USER devel SUPERUSER INHERIT CREATEDB CREATEROLE;
-ALTER USER devel PASSWORD '123mudar';
-\du "para listar os usuarios"
-
-                                  List of roles
-Role name |                         Attributes                         | Member of
------------+------------------------------------------------------------+-----------
-devel     | Superuser, Create role, Create DB                          | {}
-homestead | Superuser                                                  | {}
-pgteste   | Superuser, Create role, Create DB                          | {}
-postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
-
-"também pode ser criado da seguinte forma"
-createuser -P pgteste "porem sem as devidas permissões"
-
-                                  List of roles
-Role name |                         Attributes                         | Member of
------------+------------------------------------------------------------+-----------
-devel     | Superuser, Create role, Create DB                          | {}
-homestead | Superuser                                                  | {}
-pgteste   |                                                            | {}
-postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
-
-# Editar permissoes de acesso de outros usuarios/hosts
-sudo su - postgres
-sudo vi /etc/postgresql/9.6/main/pg_hba.conf
-sudo vi /etc/postgresql/10/main/pg_hba.conf
-sudo vi /etc/postgresql/11/main/pg_hba.conf
-sudo vi /etc/postgresql/12/main/pg_hba.conf
-sudo vi /etc/postgresql/13/main/pg_hba.conf
-
-=============================================================================
-TODAS AS VERSÃO INSTALADAS DEVEM SEGUIR A CONFIGURAÇÃO ABAIXO NOS RESPECTIVOS
-ARQUIVOS DE CONFIGURAÇÃO
-=============================================================================
-listen_addresses = '*'
-    port = 5432
-
-#Habilitar porta padrão de comunicação ao postgresql
-sudo ufw allow from any to any port 5432 proto tcp
-
-#Verificar a lista de portas disponiveis e ouvintes
-ss -nlt
-
-#Apos alterações, reiniciar o serviço do postgresql
-sudo systemctl restart postgresql
-systemctl status postgresql.service
-
-#Nesse caso a base de dados foi criada pelo SGBD DBeaver
+<pre>
+	composer install
 </pre>
 
-	<h4>Criar as tabelas definidas em database/migrations no laravel, exemplo:</h4>
-	<pre>
-php artisan make:migration create_NOME_DA_TABELA_table (create_products_table)
-php artisan migrate
+<p>
+	- Atualizar a estrutura do autoload para mapear as novas dependencias
+</p>
+
+<pre>
+	composer dump-autoload
 </pre>
 
-	<h4>Caso necessario desfazer a criação da tabela</h4>
-	<pre>php artisan migrate:rollback ou php artisan migrate:reset</pre>
+<p>
+	- Gerar a chave de autenticação da aplicação
+</p>
 
-	<h4>Para recriar as tabelas</h4>
-	<pre>php artisan migrate:refresh</pre>
+<pre>
+	php artisan key:generate
+</pre>
 
-	<h4>Para inicializar as tabelas criadas (Seeders)</h4>
-	<pre>php artisan db:seed</pre>
+<h3>Configurar o banco de dados</h3>
 
-	<h4>Para iniciarlizar uma tabela especifica</h4>
-	<pre>php artisan db:seed --class=UsersTableSeeder</pre>
+<p>
+	<strong>
+		NOTA: Este processo serve apenas para os casos onde ainda não existe o banco de dados,
+		ou casos onde uma nova instalação foi realizada.
+	</strong>
+</p>
 
-	<h4>Para criar a tabela e ja inicializar</h4>
-	<pre>php artisan migrate:refresh --seed</pre>
+<h4>MYSQL</h4>
 
-	> Detalhes sobre banco de dados no arquivo .env
-	* MYSQL
-	<pre>
+<p>
+	- Criar usuário dedicado
+</p>
+
+<pre>
+	# Acessar o mysql como root ou homestead
+	mysql -u root -p
+		Infome a senha:
+
+	# Criar o usuario
+	CREATE USER 'devel'@'localhost' IDENTIFIED BY '123mudar';
+	CREATE USER 'devel'@'%' IDENTIFIED BY '123mudar';
+
+	# Consultar usuario criado
+	SELECT user, authentication_string, plugin, host FROM mysql.user;
+
+	# Conceder privilegios ao usuario criado
+	GRANT ALL PRIVILEGES ON *.* TO 'devel'@'localhost' WITH GRANT OPTION;
+
+	# Caso necessario atualizar as concessões do novo usuário
+	FLUSH PRIVILEGES;
+
+	# Testar conexao com o novo usuario
+	mysql -u devel -p
+		Infome a senha:
+
+	# Criar a base de dados para o usuário/aplicação
+	CREATE SCHEMA `db_laravel` DEFAULT CHARACTER SET utf8mb4;
+</pre>
+
+<p>
+	<strong>
+		NOTA: Pode ser utilizado o Workbench ou DBeaver para gerenciar o Banco
+	</strong>
+</p>
+
+<h4>MSSQL</h4>
+
+<p>
+	<strong>
+		NOTA: ESSA OPERAÇÃO UTILIZA O USUARIO PADRAO DO MSSQL (SA) E SENHA DEVEL (123Mudar$)
+	</strong>
+</p>
+
+<p>
+	<strong>
+		NOTA: Foi utilizado o SGBD DBeaver
+	</strong>
+</p>
+
+<pre>
+	# Atualizar sistema
+	sudo apt-get update
+	sudo apt-get -y upgrade
+
+	# Adicionar a chave publica de confiança da microsoft
+	sudo wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+
+	# Adicionar o repositorio da microsoft na lista do ubuntu
+	sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/18.04/mssql-server-2019.list)"
+
+	# Instalar o servidor MSSQL
+	sudo apt install mssql-server
+
+	# Configurar o MSSQL, licença de uso, senha etc...
+	sudo /opt/mssql/bin/mssql-conf setup
+
+	# Verificar se o serviço do mssql esta ativo
+	systemctl status mssql-server.service
+
+	# Adicionar chave publica de confiança da microsoft
+	curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+
+	# Obter lista de respositorio necessario da microsoft
+	curl https://packages.microsoft.com/config/ubuntu/19.10/prod.list > mssql-release.list
+	sudo cp mssql-release.list /etc/apt/sources.list.d/mssql-release.list
+
+	# Aceitar e instalar a ferramenta sqlcmd de linha de comando para gerenciamento de banco
+	sudo ACCEPT_EULA=Y apt install mssql-tools unixodbc-dev
+
+	# Atualizar novamete o sistema apos configurar o ambiente para uso do MSSQL
+	sudo apt update
+
+	# Configurar a variavel de ambiente PATH para executar o sqlcmd (opcional)
+	echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
+	echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+	source ~/.bashrc
+
+	# Executar em CLI
+	sqlcmd -S 127.0.0.1 -U SA
+</pre>
+
+<h4>PGSQL</h4>
+
+<p>
+	<strong>
+		NOTA: PARA TODOS OS USUARIOS A SENHA É PADRÃO (123mudar)
+	</strong>
+</p>
+
+<pre>
+	# Instalar o postgres caso ainda nao tenhao instalado
+	sudo apt-get install postgresql
+
+	# Assumir o super usuario do postgres
+	sudo su - postgres "acesso ao ambiente postgres"
+	psql "para abrir o terminal CLI do postgres"
+
+	# Adicionar um usuario para gerenciar o banco de dados
+	CREATE USER devel SUPERUSER INHERIT CREATEDB CREATEROLE;
+	ALTER USER devel PASSWORD '123mudar';
+	\du "para listar os usuarios"
+
+									  List of roles
+	Role name |                         Attributes                         | Member of
+	-----------+------------------------------------------------------------+-----------
+	devel     | Superuser, Create role, Create DB                          | {}
+	homestead | Superuser                                                  | {}
+	pgteste   | Superuser, Create role, Create DB                          | {}
+	postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
+
+	"também pode ser criado da seguinte forma"
+	createuser -P pgteste "porem sem as devidas permissões"
+
+									  List of roles
+	Role name |                         Attributes                         | Member of
+	-----------+------------------------------------------------------------+-----------
+	devel     | Superuser, Create role, Create DB                          | {}
+	homestead | Superuser                                                  | {}
+	pgteste   |                                                            | {}
+	postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
+
+	# Editar permissoes de acesso de outros usuarios/hosts
+	sudo su - postgres
+	sudo vi /etc/postgresql/9.6/main/pg_hba.conf
+	sudo vi /etc/postgresql/10/main/pg_hba.conf
+	sudo vi /etc/postgresql/11/main/pg_hba.conf
+	sudo vi /etc/postgresql/12/main/pg_hba.conf
+	sudo vi /etc/postgresql/13/main/pg_hba.conf
+
+	=============================================================================
+	TODAS AS VERSÃO INSTALADAS DEVEM SEGUIR A CONFIGURAÇÃO ABAIXO NOS RESPECTIVOS
+	ARQUIVOS DE CONFIGURAÇÃO
+	=============================================================================
+	listen_addresses = '*'
+		port = 5432
+
+	#Habilitar porta padrão de comunicação ao postgresql
+	sudo ufw allow from any to any port 5432 proto tcp
+
+	#Verificar a lista de portas disponiveis e ouvintes
+	ss -nlt
+
+	#Apos alterações, reiniciar o serviço do postgresql
+	sudo systemctl restart postgresql
+	systemctl status postgresql.service
+
+	#Nesse caso a base de dados foi criada pelo SGBD DBeaver
+</pre>
+
+<h4>Migrations</h4>
+
+<p>
+	- Create
+</p>
+
+<pre>
+	php artisan make:migration create_NOME_DA_TABELA_table (create_products_table)
+	php artisan migrate
+</pre>
+
+<p>
+	- Caso necessario desfazer a criação da tabela
+</p>
+
+<pre>
+	php artisan migrate:rollback ou php artisan migrate:reset
+</pre>
+
+<p>
+	- Para recriar as tabelas
+</p>
+
+<pre>
+	php artisan migrate:refresh
+</pre>
+
+<h3>Seeders</h3>
+
+<p>
+	- Para inicializar as tabelas criadas
+</p>
+
+<pre>
+	php artisan db:seed
+</pre>
+
+<p>
+	- Para inicializar uma tabela especifica
+</p>
+
+<pre>
+	php artisan db:seed --class=UsersTableSeeder
+</pre>
+
+<p>
+	- Para criar a tabela e ja inicializar
+</p>
+
+<pre>
+	php artisan migrate:refresh --seed
+</pre>
+
+<h3>Detalhes sobre banco de dados no arquivo .env</h3>
+
+<h4>MYSQL</h4>
+
+<pre>
 DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=db_joticode_laravel
-DB_USERNAME=devel
-DB_PASSWORD=123mudar
+	DB_HOST=127.0.0.1
+	DB_PORT=3306
+	DB_DATABASE=db_laravel
+	DB_USERNAME=devel
+	DB_PASSWORD=123mudar
 </pre>
 
-	* MSSQL
-	<pre>
-DB_CONNECTION=sqlsrv
-DB_HOST=127.0.0.1
-DB_PORT=1433
-DB_DATABASE=db_joinner
-DB_USERNAME=devel
-DB_PASSWORD=123mudar
+<h4>MSSQL</h4>
+
+<pre>
+	DB_CONNECTION=sqlsrv
+	DB_HOST=127.0.0.1
+	DB_PORT=1433
+	DB_DATABASE=db_laravel
+	DB_USERNAME=devel
+	DB_PASSWORD=123mudar
 </pre>
 
-	* PGSQL
-	<pre>
-DB_CONNECTION=pgsql
-DB_HOST=127.0.0.1
-DB_PORT=5432
-DB_DATABASE=db_joinner
-DB_USERNAME=devel
-DB_PASSWORD=123mudar
+<h4>PGSQL</h4>
+
+<pre>
+	DB_CONNECTION=pgsql
+	DB_HOST=127.0.0.1
+	DB_PORT=5432
+	DB_DATABASE=db_laravel
+	DB_USERNAME=devel
+	DB_PASSWORD=123mudar
 </pre>
 
-	<h4>Preparar ambiente para autenticação</h4>
+<h2>Autenticação (Auth)</h2>
 
-	<pre>
-#Instalar as dependencias para iniciar a configuração de autenticação
-composer require laravel/ui:^2.4
-php artisan ui vue --auth
-npm init
-npm install
-yarn install
+<h3>Instalar as dependencias para iniciar a configuração de autenticação</h3>
 
-#Instalar o bootstrap e demais recursos front-end
-// Generate basic scaffolding...
-php artisan ui bootstrap
-php artisan ui vue
-php artisan ui react
-
-// Generate login / registration scaffolding...
-php artisan ui bootstrap --auth
-php artisan ui vue --auth
-php artisan ui react --auth
+<pre>
+	composer require laravel/ui:^2.4
+	php artisan ui vue --auth
+	npm init
+	npm install
+	yarn install
 </pre>
 
-	<h4>Ambiente para autenticação</h4>
+<h3>Instalar o bootstrap e demais recursos front-end</h3>
 
-	<pre>
-# {ROOT_PATH}/app/Exceptions/Handler.php
+<pre>
+	// Generate basic scaffolding...
+	php artisan ui bootstrap
+	php artisan ui vue
+	php artisan ui react
 
-    protected $dontReport = [
-        \Illuminate\Auth\AuthenticationException::class,
-        \Illuminate\Auth\Access\AuthorizationException::class,
-        \Symfony\Component\HttpKernel\Exception\HttpException::class,
-        \Illuminate\Database\Eloquent\ModelNotFoundException::class,
-        \Illuminate\Session\TokenMismatchException::class,
-        \Illuminate\Validation\ValidationException::class,
-    ];
-
-# {ROOT_PATH}/app/Http/Controllers/Auth/LoginController.php
-
-    protected $redirectTo = '/access_control';
-
-# {ROOT_PATH}/app/Http/Controllers/Auth/RegisterController.php
-
-    protected  $redirectTo = '/login';
-
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'user_level' => 'required|max:1',
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-    }
-
-    protected function create(array $data)
-    {
-        return User::create([
-            'user_level' => $data['user_level'],
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-    }
-
-# {ROOT_PATH}/app/Http/Middleware/RedirectIfAuthenticated.php
-
-    public function handle($request, Closure $next, $guard = null)
-    {
-        if (Auth::guard($guard)->check()) {
-            return redirect('/');
-        }
-
-        return $next($request);
-    }
-
-# {ROOT_PATH}/app/JereeltonDevel/LoginRoute.php
-
-    Classe para gerenciar regras de rotas (transformar em controller)
-
-# {ROOT_PATH}/app/Providers/AppServiceProvider.php
-
-    public function boot()
-    {
-        Schema::defaultStringLength(191);
-    }
-
-# {ROOT_PATH}/app/User.php
-
-    class User extends Authenticatable
-    {
-        use Notifiable;
-
-        protected $guard = 'user';
-        protected $table = 'users';
-
------------------------------------------------------------------------------------------------------
-
-        /**
-         * Send the password reset notification.
-         *
-         * @param  string  $token
-         * @return void
-         */
-        public function sendPasswordResetNotification($token)
-        {
-            $this->notify(new ResetPasswordNotification($token));
-        }
-
-# {ROOT_PATH}/config/app.php
-
-    'name' => env('APP_NAME', 'Teste'),
-    'timezone' => 'America/Sao_Paulo',
-
-# {ROOT_PATH}/config/view.php
-
-    'paths' => [
-        resource_path('views'),
-        public_path("views"),
-    ],
-
-# {ROOT_PATH}/public
-
-# {ROOT_PATH}/resources
-
-# {ROOT_PATH}/routes/web.php
-
+	// Generate login / registration scaffolding...
+	php artisan ui bootstrap --auth
+	php artisan ui vue --auth
+	php artisan ui react --auth
 </pre>
 
-<hr />
+<h3>Ambiente para autenticação</h3>
+
+<pre>
+	# {ROOT_PATH}/app/Exceptions/Handler.php
+
+		protected $dontReport = [
+			\Illuminate\Auth\AuthenticationException::class,
+			\Illuminate\Auth\Access\AuthorizationException::class,
+			\Symfony\Component\HttpKernel\Exception\HttpException::class,
+			\Illuminate\Database\Eloquent\ModelNotFoundException::class,
+			\Illuminate\Session\TokenMismatchException::class,
+			\Illuminate\Validation\ValidationException::class,
+		];
+
+	# {ROOT_PATH}/app/Http/Controllers/Auth/LoginController.php
+
+		protected $redirectTo = '/access_control';
+
+	# {ROOT_PATH}/app/Http/Controllers/Auth/RegisterController.php
+
+		protected  $redirectTo = '/login';
+
+		protected function validator(array $data)
+		{
+			return Validator::make($data, [
+				'user_level' => 'required|max:1',
+				'name' => 'required|string|max:255',
+				'email' => 'required|string|email|max:255|unique:users',
+				'password' => 'required|string|min:6|confirmed',
+			]);
+		}
+
+		protected function create(array $data)
+		{
+			return User::create([
+				'user_level' => $data['user_level'],
+				'name' => $data['name'],
+				'email' => $data['email'],
+				'password' => bcrypt($data['password']),
+			]);
+		}
+
+	# {ROOT_PATH}/app/Http/Middleware/RedirectIfAuthenticated.php
+
+		public function handle($request, Closure $next, $guard = null)
+		{
+			if (Auth::guard($guard)->check()) {
+				return redirect('/');
+			}
+
+			return $next($request);
+		}
+
+	# {ROOT_PATH}/app/JereeltonDevel/LoginRoute.php
+
+		Classe para gerenciar regras de rotas (transformar em controller)
+
+	# {ROOT_PATH}/app/Providers/AppServiceProvider.php
+
+		public function boot()
+		{
+			Schema::defaultStringLength(191);
+		}
+
+	# {ROOT_PATH}/app/User.php
+
+		class User extends Authenticatable
+		{
+			use Notifiable;
+
+			protected $guard = 'user';
+			protected $table = 'users';
+
+	-----------------------------------------------------------------------------------------------------
+
+			/**
+			 * Send the password reset notification.
+			 *
+			 * @param  string  $token
+			 * @return void
+			 */
+			public function sendPasswordResetNotification($token)
+			{
+				$this->notify(new ResetPasswordNotification($token));
+			}
+
+	# {ROOT_PATH}/config/app.php
+
+		'name' => env('APP_NAME', 'Teste'),
+		'timezone' => 'America/Sao_Paulo',
+
+	# {ROOT_PATH}/config/view.php
+
+		'paths' => [
+			resource_path('views'),
+			public_path("views"),
+		],
+
+	# {ROOT_PATH}/public
+
+	# {ROOT_PATH}/resources
+
+	# {ROOT_PATH}/routes/web.php
+
+</pre>

@@ -1,0 +1,113 @@
+
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: arial, sans-serif;
+}
+
+.div-items-info {
+    width: 18%;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+    background: #232323;
+}
+
+.div-items-info h2 {
+    font-size: 16px;
+    margin: 15px;
+    color: aquamarine;
+}
+
+.div-items-info h2 .author {
+    color: #FFFFFF;
+    font-weight: normal;
+    font-size: 13px;
+}
+
+.div-items-info h2 .author a {
+    color: #0099ff;
+}
+
+.div-items-info ul {
+    list-style: none;
+    padding: 10px;
+}
+
+.div-items-info ul li {
+    margin: 10px 3px;
+}
+
+.div-items-info ul li a {
+    color: #898989;
+    text-decoration: none;
+}
+
+.div-items-info ul li a:hover {
+    text-decoration: underline;
+}
+
+.div-items-info ul li a.active {
+    color: #12eae0;
+}
+
+.div-contents-info {
+    width: 81%;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0px;
+    right: 0px;
+    background: #FEFEFE;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.div-contents-info ul {
+    margin: 30px;
+    list-style-type: circle !important;
+}
+
+.div-contents-info ul li {
+    margin: 10px;
+    color: #232323;
+}
+
+.div-contents-info p {
+    color: #595959;
+    padding: 20px;
+    line-height: 20px;
+    letter-spacing: 1px;
+}
+
+small {
+    padding: 20px;
+}
+
+.div-contents-info pre {
+    margin: 20px;
+    padding: 20px;
+    font-family: "Courier New", monospace;
+    border: solid #CACACA 1px;
+    background: #F1F1F1;
+    overflow: auto;
+}
+
+.div-contents-info h1 {
+    color: #888888;
+    margin: 40px 0px 40px 0px;
+}
+
+.div-contents-info h2 {
+    padding: 20px;
+    color: #444444;
+    background: #DEDEDE;
+    border-left: solid #777777 15px;
+}
+
+.div-contents-info h3,
+.div-contents-info h4 {
+    padding: 20px;
+}

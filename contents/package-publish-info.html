@@ -1,56 +1,104 @@
 
-<h1>[ PACKAGIST HELPER ]</h1>
+<h1>PACKAGIST HELPER</h1>
 
 <hr />
 
-<h3>Criando/Publicando um projeto no Packagist</h3>
+<h2>Sobre</h2>
+
+<p>
+	Criar, publicar e gerenciar pacotes para o composer PHP.
+</p>
+
+<hr />
+
+<h2>Requisitos</h2>
+
+<ul>
+	<li>Ubuntu 18.04 ou superior</li>
+	<li>Ter o git instalado</li>
+	<li>Ter o compose instalado</li>
+	<li>Ter uma conta no GitHub</li>
+	<li>Ter uma conta no Packagist</li>
+	<li>Ter um projeto no GitHub</li>
+</ul>
+
+<hr />
+
+<h2>Procedimentos</h2>
+
+<h3>Criar um projeto</h3>
+
+<p>
+	Projeto Exemplo: https://github.com/vendor/project.git
+</p>
+
+<h3>Criar o arquivo package.json</h3>
+
+<p>
+	Com o composer instalado, execute o comando:
+</p>
 
 <pre>
-- Instalar o composer e o git
-- Ter uma conta no Packagist
-- Ter uma conta no GitHub
-- Criar o projeto no GitHub
-	- Exemplo: https://github.com/vendor/project.git
-- Clonar o projeto
-	- git clone https://github.com/vendor/project.git .
-- Criar o arquivo package.json
-	- composer init
-		- Exemplo:
+	composer init
+</pre>
+
+<p>
+	- Uma serie de perguntas sera feita para gerar o arquivo package.json, ao final do processo
+	você tera um arquivo com o conteudo parecido como o abaixo.
+	<br />
+	- Você também pode criar o aquivo manualmente, copiando um ja existente a editar suas
+	definições.
+</p>
+
+<small>Exemplo package.json</small>
+<pre>
+	{
+		"name": "vendor/project",
+		"type": "project",
+		"description": "Project description...",
+		"keywords": ["key1","key2"],
+		"homepage": "https://www.website.com/page",
+		"license": "MIT",
+		"version": "1.0.0",
+		"authors": [
 			{
-			    "name": "vendor/project",
-			    "type": "project",
-			    "description": "Project descriptin...",
-			    "keywords": ["key1","key2"],
-			    "homepage": "http://www.webpage.com/page",
-			    "license": "MIT",
-			    "version": "1.0.0",
-			    "authors": [
-			        {
-			            "name": "FirstName LastName",
-			            "email": "vendor@email.com"
-			        }
-			    ],
-			    "require": {
-			    },
-			    "require-dev": {
-			    },
-			    "autoload": {
-			        "psr-4": {
-			            "Namespace\\": "src/"
-			        }
-			    },
-			    "scripts": {
-			    },
-			    "suggest": {
-			    }
+				"name": "FirstName LastName",
+				"email": "vendor@email.com"
 			}
-- Estrutura de pastas do projeto (Exemplo):
+		],
+		"require": {
+		},
+		"require-dev": {
+		},
+		"autoload": {
+			"psr-4": {
+				"Namespace\\": "src/"
+			}
+		},
+		"scripts": {
+		},
+		"suggest": {
+		}
+	}
+</pre>
+
+<p>
+	- Abaixo uma estrutura de pastas simples e padrão para o caso:
+</p>
+
+<pre>
     project/
         .gitignore
         composer.json
         src/
        		ProjectTest.php
-	<?php
+</pre>
+
+<p>
+	- Script de teste ProjectTest.php
+</p>
+
+<pre>
 	namespace Namespace;
 
 	class ProjectTest
@@ -60,43 +108,95 @@
 			echo "ProjectTest is running...";
 		}
 	}
-	?>
-	- O arquivo .gitignore deve ter a pasta /vendor/
-- Enviar as alterações para o repositorio git
+</pre>
+
+<p>
+	- O arquivo .gitignore deve ter a pasta /vendor/ para não enviar as dependencias para o repositorio
+</p>
+
+<h3>Enviar as alterações para o repositorio git</h3>
+
+<pre>
+	git status
 	git add .
 	git commit -m "Initial Commit"
 	git push -u origin master
-- Publicar o repositorio no Packagist
-	Efetuar login: https://packagist.org/login/
-	Enviar pacote: Submit package => Check => Submit
-	Configurar o Token Packagist no GitHub:
-		GitHub > Project > Settings > Webhooks > Add Webhook
-			Preencher formulario:
-				Payload URL: https://packagist.org/api/github?username=seu_usuario_packagist
-				Content type: application/json
-				SSL verification: Enable SSL verification
-				Secret: (Token Packagist)
-					O token pode ser obtido em https://packagist.org/profile/, clicando em Show API Token
-- Instalar/Utilizar o pacote
-	Via package.json:
+</pre>
+
+<h3>Publicar o repositorio no Packagist</h3>
+
+<p>
+	- Efetuar login em https://packagist.org/login/
+	<br />
+	- Enviar pacote pelo Submit package => Check => Submit
+</p>
+
+<h3>Configurar o Token Packagist no GitHub</h3>
+
+<p>
+	- Ao acessar a conta no GitHub, ir até: Project > Settings > Webhooks > Add Webhook, e preencher o formulario
+	de cadastro do web hook para ligar o projeto do GitHub ao pacote no Packagist, exemplo:
+</p>
+
+<pre>
+	Payload URL: https://packagist.org/api/github?username=seu_usuario_packagist
+	Content type: application/json
+	SSL verification: Enable SSL verification
+	Secret: (Token Packagist)
+		O token pode ser obtido em https://packagist.org/profile/, clicando em Show API Token
+</pre>
+
+<h3>Instalar/Utilizar o pacote publicado</h3>
+
+<p>
+	- Via package.json:
+</p>
+
+<pre>
     "require": {
         "slim/slim": "4.2.0",
         "rain/raintpl": "3.1.1",
         "ext-json": "*",
-        "huntercodexs/phphunterkernel": "1.0.0"
+        "huntercodexs/phphunterkernel": "1.0.0" <<<< Exemplo
     }
-	composer update
-    Via comando:
-	composer require vendor/project
-	composer require vendor/project:dev-master (Para projetos em desenvolvimento e sem release/versão)
-- Criar uma release do projeto no GitHub
-	acessar repositorio do projeto
-	clicar em Release no lado direito da tela
-	configurar a release, exemplo:v1.0.0
-	publicar
-- Projeto/Pacote sem Release
-	Configurar no projeto que vai usar o pacote o minimum-stability como dev
-		"minimum-stability": "dev",
-		"prefer-stable": true,
 </pre>
 
+<p>
+	- Executar o composer update para instalar o pacote:
+</p>
+
+<pre>
+	composer update
+</pre>
+
+<p>
+	- Via comando:
+</p>
+
+<pre>
+	composer require vendor/project
+	composer require vendor/project:dev-master (Para projetos em desenvolvimento e sem release/versão)
+</pre>
+
+<h3>Criar uma release do projeto no GitHub</h3>
+
+<p>
+	- Acessar repositorio do projeto no GitHub
+	<br />
+	- Clicar em Release no lado direito da tela
+	<br />
+	- Configurar a release, exemplo:v1.0.0
+	<br />
+	- Clicar em publicar
+</p>
+
+<h3>Projeto/Pacote sem Release</h3>
+
+<p>
+	- Configurar no projeto que vai usar o pacote o minimum-stability como dev
+</p>
+
+<pre>
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+</pre>

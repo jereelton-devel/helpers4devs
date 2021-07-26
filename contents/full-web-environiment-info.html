@@ -74,7 +74,12 @@
 
 <h3>Clonar o projeto HOMESTEAD da laravel e configurar o ambiente</h3>
 
-<strong>NOTA: Repare que o local de instalação do projeto é na home do usuário</strong>
+<p>
+    <strong>
+        NOTA: Repare que o local de instalação do projeto é na home do usuário
+    </strong>
+</p>
+
 <pre>git clone https://github.com/laravel/homestead.git ~/Homestead</pre>
 
 <h3>Acessar a pasta do projeto</h3>
@@ -87,7 +92,12 @@
 
 <h3>Inicializar o homestead</h3>
 
-<strong>NOTA: Esse procedimento gera um arquivo Homestead.yaml na raiz do projeto</strong>
+<p>
+    <strong>
+        NOTA: Esse procedimento gera um arquivo Homestead.yaml na raiz do projeto
+    </strong>
+</p>
+
 <pre>bash init.sh</pre>
 
 <h3>Gerar a chave publica para o ambiente homestead</h3>
@@ -126,7 +136,12 @@
 
 <h3>Configurar arquivo</h3>
 
-<strong>NOTA: Use um editor de texto qualquer</strong>
+<p>
+    <strong>
+        NOTA: Use um editor de texto qualquer
+    </strong>
+</p>
+
 <pre>sublime-text.subl Homestead.yaml</pre>
 
 <pre class="code-style">
@@ -182,10 +197,12 @@
 
 <h3>Definir resolução de nomes para os sites/projetos dentro do homestead</h3>
 
-<strong>
-    ATENÇÃO: Essa configuração deve ser feito no GUEST/HOST que esta hospedando o homestead atraves do
+<p>
+    <strong>
+        ATENÇÃO: Essa configuração deve ser feito no GUEST/HOST que esta hospedando o homestead atraves do
     hipervisor vagrant e não dentro da instancia vagrant/homestead !
-</strong>
+    </strong>
+</p>
 
 <pre>
     configurar /etc/hosts
@@ -201,16 +218,24 @@
 
 <h3>Inicializar o ambiente com o vagrant</h3>
 
-<strong>NOTA: Nesse ponto a imagem baixada pelo vagrant é incorporada ao virtualbox</strong>
+<p>
+    <strong>
+        NOTA: Nesse ponto a imagem baixada pelo vagrant é incorporada ao virtualbox
+    </strong>
+</p>
 
 <pre>
     vagrant up --provision
 </pre>
 
-<strong>
-	!IMPORTANTE: Pode ser que em algum momento o vagrant questionar sobre qual placa de rede deve ser
+<p>
+    <strong>
+	    NOTA: Pode ser que em algum momento o vagrant questionar sobre qual placa de rede deve ser
     utilizada como bridge, conforme exemplo abaixo:
-</strong>
+    </strong>
+</p>
+
+<br />
 
 <small>Veja que a placa escolhida foi a opção 1) enp4s0</small>
 
@@ -251,14 +276,20 @@
     vagrant global-status => "Verificar status e ids das VMs"
 </pre>
 
-<strong>* Configuração Do Ambiente Homestead Finalizado!</strong>
+<p>
+    <strong>
+        Configuração Do Ambiente Homestead Finalizado!
+    </strong>
+<p>
 
 <h3>Configurar VAGRANT e HOMESTEAD para acesso via rede</h3>
 
-<strong>
-    NOTA: Esse procedimento ira permitir que computadores que estão na mesma rede possam acessar a
+<p>
+    <strong>
+        NOTA: Esse procedimento ira permitir que computadores que estão na mesma rede possam acessar a
     aplicação contida no Vagrant/Homestead !
-</strong>
+    </strong>
+</p>
 
 <h3>Adicionar as linhas abaixo no arquivo Homestead.yaml</h3>
 
@@ -268,14 +299,20 @@
         ip: "192.168.15.100"
 </pre>
 
-<strong>
-    !IMPORTANTE: Ter o cuidado de fixar e setar o endereço de IP, pois ele sempre
+<p>
+    <strong>
+    NOTA: Ter o cuidado de fixar e setar o endereço de IP, pois ele sempre
     será servido no mesmo endereço.
-</strong>
+    </strong>
+</p>
 
 <h3>Adicionar o bloco de código abaixo, caso não existam no arquivo homestead.rb</h3>
 
-<strong>O arquivo fica em: /home/{{{USUARIO}}}/Homestead/scripts</strong>
+<p>
+    <strong>
+        O arquivo fica em: /home/{{{USUARIO}}}/Homestead/scripts
+    </strong>
+</p>
 
 <pre>
     # Configure A Private Network IP
@@ -294,7 +331,6 @@
     end
 </pre>
 
-
 <h3>Instalar e configurar o serviço de DNS: BIND9</h3>
 
 <pre>
@@ -307,17 +343,19 @@
     sudo apt-get install dnsutils
 </pre>
 
-
 <h3>Configurar o serviço de DNS</h3>
 
-<p>Após instalar o bind9 e o dnsutils, as seguintes configurações serão necessárias</p>
+<p>
+    - Após instalar o bind9 e o dnsutils, as seguintes configurações serão necessárias,
+    editar o arquivo named.conf.local
+</p>
 
-<h5>Editar o arquivo named.conf.local</h5>
-
-<strong>
-    Adicionar as zonas(sites) que serão ouvidos pelo servidor DNS, abaixo um modelo de
+<p>
+    <strong>
+        Adicionar as zonas(sites) que serão ouvidos pelo servidor DNS, abaixo um modelo de
     como o arquivo ficaria para dois dominios.
-</strong>
+    </strong>
+</p>
 
 <pre>
     //
@@ -378,9 +416,11 @@ cp db.local db.site2'
 
 <h3>Editar o arquivo /etc/resolv.conf</h3>
 
-<strong>
-    Cuidado: Esse arquivo é utilizado pelo sistema operacional para resolução de nomes e direcionamento diversos na internet
-</strong>
+<p>
+    <strong>
+        Cuidado: Esse arquivo é utilizado pelo sistema operacional para resolução de nomes e direcionamento diversos na internet
+    </strong>
+</p>
 
 <pre>
     # This file is managed by man:systemd-resolved(8). Do not edit.
@@ -428,7 +468,11 @@ cp db.local db.site2'
     1.0.0	IN	PTR	site1.local.
 </pre>
 
-<strong>Reiniciar o serviço do bind9</strong>
+<p>
+    <strong>
+        Reiniciar o serviço do bind9
+    </strong>
+</p>
 
 <pre>
     sudo service bind9 restart
@@ -437,10 +481,12 @@ cp db.local db.site2'
 
 <h3>Configurar arquivo /etc/hosts no cliente que ira consumir os websites</h3>
 
-<strong>
-    Exemplo: REPARE O IP É O MESMO USADO NO ARQUIVO Homestead.yaml para
-    disponibilizar acesso a rede em modo bridge
-</strong>
+<p>
+    <strong>
+        Exemplo: REPARE O IP É O MESMO USADO NO ARQUIVO Homestead.yaml para
+        disponibilizar acesso a rede em modo bridge
+    </strong>
+</p>
 
 <pre>
     127.0.0.1	localhost

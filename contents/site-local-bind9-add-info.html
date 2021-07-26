@@ -1,93 +1,150 @@
 
-<h1>[ SITE LOCAL ADD HELP ]</h1>
+<h1>SITE LOCAL ADD HELPER</h1>
 
 <hr />
 
-<h3>Criar website local usando o HOMESTEAD e o BIND9</h3>
+<h2>Sobre</h2>
+
+<p>
+	Adicionar um website ao sistema local de DNS para trabalhar com requisições web de forma mais
+	profissional com mais qualidade e acertividade.
+</p>
+
+<p>
+	<strong>
+		NOTA: Esse processo pode ser executado rapidamente com o script site_local_bind9 contido no projeto: https://github.com/jereelton-devel/webdev/bin
+	</strong>
+</p>
+
+<hr />
+
+<h2>Requisitos</h2>
+
+<ul>
+	<li>Ubuntu 18.04 ou superior</li>
+	<li>Bind9</li>
+	<li>DNS Utils</li>
+	<li>Vagrant</li>
+	<li>Homestead PHP</li>
+	<li>Conhecimentos em Linux</li>
+</ul>
+
+<hr />
+
+<h2>Criar website local usando o HOMESTEAD e o BIND9</h2>
+
+<p>
+	- Inserir o site no arquivo Homestead.yaml:
+</p>
 
 <pre>
-- Inserir o site no arquivo Homestead.yaml:
-
 	sites:
 	    - map: exemplo.local
 	      to: /home/vagrant/code/exemplo
+</pre>
 
-- Configurar o serviço de DNS no BIND9:
-
+<p>
+	- Configurar o serviço de DNS no BIND9:
+	<br/>
 	- Editar o arquivo /etc/bind/named.conf.local:
+</p>
 
-		//Adicionar zona
-		zone "sample.local" {
-			type master;
-			file "/etc/bind/db.sample";
-		};
+<pre>
+	//Adicionar zona
+	zone "sample.local" {
+		type master;
+		file "/etc/bind/db.sample";
+	};
 
-		//Dominio reverse
-		//zone "15.168.192.in-addr.arpa" {
-		//	type master;
-		//	file "/etc/bind/db.sample.192";
-		//
-		//};
+	//Dominio reverse
+	//zone "15.168.192.in-addr.arpa" {
+	//	type master;
+	//	file "/etc/bind/db.sample.192";
+	//
+	//};
+</pre>
 
+<p>
 	- Copiar o arquivo de exemplo /etc/bind/db.local
+</p>
 
-		cp db.local db.sample
+<pre>
+	cp db.local db.sample
 
-		//Editar o arquivo:
-		;
-		; BIND data file for local loopback interface
-		;
-		$TTL	604800
-		@	IN	SOA	sample.local. root.sample.local. (
-					      2		; Serial
-					 604800		; Refresh
-					  86400		; Retry
-					2419200		; Expire
-					 604800 )	; Negative Cache TTL
-		;
-		@	IN	NS	sample.local.
-		@	IN	A	127.0.0.1
-		@	IN	AAAA	::1
+	//Editar o arquivo:
+	;
+	; BIND data file for local loopback interface
+	;
+	$TTL	604800
+	@	IN	SOA	sample.local. root.sample.local. (
+					  2		; Serial
+				 604800		; Refresh
+				  86400		; Retry
+				2419200		; Expire
+				 604800 )	; Negative Cache TTL
+	;
+	@	IN	NS	sample.local.
+	@	IN	A	127.0.0.1
+	@	IN	AAAA	::1
+</pre>
 
+<p>
 	- Copiar o arquivo de 192:
+</p>
+<pre>
+	cp db.192 db.sample.192
 
-		cp db.192 db.sample.192
+	;
+	; BIND reverse data file for local loopback interface
+	;
+	$TTL	604800
+	@	IN	SOA	sample.local. root.sample.local. (
+					  1		; Serial
+				 604800		; Refresh
+				  86400		; Retry
+				2419200		; Expire
+				 604800 )	; Negative Cache TTL
+	;
+	@	IN	NS	sample.local.
+	1.0.0	IN	PTR	sample.local.
+</pre>
 
-		;
-		; BIND reverse data file for local loopback interface
-		;
-		$TTL	604800
-		@	IN	SOA	sample.local. root.sample.local. (
-					      1		; Serial
-					 604800		; Refresh
-					  86400		; Retry
-					2419200		; Expire
-					 604800 )	; Negative Cache TTL
-		;
-		@	IN	NS	sample.local.
-		1.0.0	IN	PTR	sample.local.
+<p>
+	- Adicionar o DNS no arquivo hosts:
+</p>
 
-- Adicionar o DNS no arquivo hosts:
-
+<pre>
 	/etc/hosts
+</pre>
 
-	LOCAL(USAR O IP CONFIGURADO NO ARQUIVO Homestead.yaml: Homestead.yaml)
-		---
-		ip: "192.168.10.10"
+<p>
+	- LOCAL(USAR O IP CONFIGURADO NO ARQUIVO Homestead.yaml: ip)
+</p>
+
+<pre>
+	---
+	ip: "192.168.10.10"
 
 	# Homestead
 	192.168.10.10	sample.local
+</pre>
 
-	REMOTO/SERVER(USAR O IP CONFIGURADO NO ARQUIVO Homestead.yaml: Homestead.yaml)
-		networks:
-		  - type: "public_network"
-		    ip: "192.168.15.100"
+<p>
+	- REMOTO/SERVER(USAR O IP CONFIGURADO NO ARQUIVO Homestead.yaml: networks)
+</p>
+
+<pre>
+	networks:
+	  - type: "public_network"
+		ip: "192.168.15.100"
 
 	# Homestead
 	192.168.15.100	sample.local
+</pre>
 
-- Reiniciar o serviço do bind9:
+<p>Reiniciar o serviço do bind9:</p>
 
+<pre>
 	sudo service bind9 restart
 	sudo service bind9 status
 </pre>

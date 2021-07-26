@@ -1,31 +1,92 @@
 
-<h1>[ NPM HELPER ]</h1>
+<h1>NPM HELPER</h1>
 
 <hr />
 
-<h3>Criando/Publicando um modulo no NPM</h3>
+<h2>Sobre</h2>
+
+<p>
+	Criar e gerenciar um modulo/pacote no repositório do NPM.
+</p>
+
+<hr />
+
+<h2>Requisitos</h2>
+
+<ul>
+	<li>Ubuntu 18.04 ou superior</li>
+	<li>NPM instalado</li>
+	<li>Ter uma conta no NPM</li>
+	<li>Ter uma conta no GitHub<li>
+	<li>Ter um projeto no GitHub com visão Publica</li>
+</ul>
+
+<hr />
+
+<h2>Procedimentos Gerais</h2>
+
+<h3>Criando um modulo para o NPM</h3>
+
+<p>
+	- Criar uma conta no NPM (https://www.npmjs.com/)
+	<br />
+	- Criar o projeto em um diretorio qualquer da sua maquina ou clocar um projeto existente no seu GitHub
+	<br />
+	- Executar npm init para gerar o package.json dentro da pasta do projeto
+		- Preencher o cadastro no terminal
+	<br />
+	- Criar um repostito no GitHUB (PUBLICO) caso ainda não tenha feito na etapa anterior
+	<br />
+	- Verificar usuario atual:
+</p>
 
 <pre>
-- Criar uma conta no NPM
-- Criar o projeto
-- Executar npm init para gerar o package.json
-	- Preencher o cadastro no terminal
-- Criar um repostito no GitHUB (PUBLICO)
-- Verificar usuario atual:
-	-npm whoami
-- Ficar atento no local onde esta o projeto, deve-se estar dentro da pasta onde ele esta
-	- cd /home/usuario/projetoNPM
-- Efetuar o login no NPM
-	- npm login
-		- usuario
-		- senha
-		- email
-- Verificar o arquivo package.json antes de publicar
-	- "respository": {"type": "git", "url": "git://github.com/vendor/projeto"}
-- Publicar o projeto
-	-npm publish
+	npm whoami
 </pre>
 
-<strong>
-	!IMPORTANTE: Se remover um pacote, tem que esperar 24horas para publicar um com o mesmo nome.
-</strong>
+<p>
+	- Ficar atento no local onde esta o projeto, deve-se estar dentro da pasta onde ele esta
+</p>
+
+<pre>
+	cd /home/usuario/projetoNPM
+</pre>
+
+<p>
+	- Efetuar o login no NPM
+</p>
+
+<pre>
+	npm login
+		Informar usuario
+		Informar senha
+		Informar email
+</pre>
+
+<p>
+	- Verificar o arquivo package.json antes de publicar
+</p>
+
+<pre class="code-style">
+	"respository": {"type": "git", "url": "git://github.com/vendor/projeto"}
+</pre>
+
+<h3>Publicando o modulo no NPM</h3>
+
+<pre>
+	npm publish
+</pre>
+
+<h3>Removendo um pacote</h3>
+
+<pre>
+	npm login
+	npm unpublish --force yourPackage
+</pre>
+
+<p>
+	<strong>
+		NOTA: Se remover um pacote, pode ser necessário aguardar por cerca de
+	24 horas para publicar um modulo com o mesmo nome.
+	</strong>
+</p>
