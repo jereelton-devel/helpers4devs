@@ -57,6 +57,8 @@ $tot = count($list);
         if(file_exists('./contents/'.$get_content.".html")) {
             include './contents/'.$get_content.".html";
         }
+    } else {
+        include './contents/modelo-info.html';
     }
     ?>
 </div>

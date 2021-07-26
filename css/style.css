@@ -111,3 +111,12 @@ small {
 .div-contents-info h4 {
     padding: 20px;
 }
+
+.div-alert {
+    color: #8B0000;
+    background: #ffc6c6;
+    border: solid #8B0000 1px;
+    margin: 20px;
+    margin-bottom: 40px;
+    padding: 30px;
+}
