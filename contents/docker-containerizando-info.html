@@ -1,134 +1,54 @@
 
-<h1>Docker + Docker Compose Helper</h1>
+<h1>DOCKERISE PHP HELPER</h1>
 
 <hr />
 
-<h2>Instalar o Docker</h2>
+<h2>Sobre</h2>
 
-<pre>
-sudo apt-get update
-sudo apt upgrade
-sudo apt-get dist-upgrade
-sudo apt install docker.io
-</pre>
+<p>
+    Criar um ambiente completo para desenvolvimento, contendo um ou mais containers, um container
+    para banco de dados Mysql, PHP containerizado e NGINX.
 
-<hr />
-
-<h2>Instalar o Docker para aplicações web no Ubuntu 20.04</h2>
-
-<h3>Instalação global do docker-compose</h3>
-
-<pre>
-sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-docker-compose --version
-</pre>
-
-<h3>Configuração</h3>
-
-<pre>
-mkdir ~/compose-demo
-cd ~/compose-demo
-mkdir app
-touch app/index.html
-    [!doctype html]
-    [html lang="en"]
-    [head]
-        [meta charset="utf-8"]
-        [title]Docker Compose Demo[/title]
-        [link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/dark.min.css"]
-    [/head]
-    [body]
-
-        [h1]This is a Docker Compose Demo Page.[/h1]
-        [p]This content is being served by an Nginx container.[/p]
-
-    [/body]
-    [/html]
-touch docker-compose.yml
-version: '3.7'
-services:
-  web:
-    image: nginx:latest
-    ports:
-      - "8888:80"
-    volumes:
-      - ./app:/usr/share/nginx/html
-</pre>
-
-<h3>Executando</h3>
-
-<pre>
-docker-compose up -d
-docker-compose ps
-</pre>
-
-<h3>Acesso</h3>
-
-<pre>
-http://localhost:8888 (LOCAL)
-http://192.168.15.13 (REMOTO)
-http://dockerdemo.app1:8888 (VIRTUAL HOSTS)
-</pre>
+    <br />
+    <br />
+    Exemplo: https://github.com/jereelton-devel/dockerise
+</p>
 
 <hr />
 
-<h2>Docker NGINX PROXY MANAGER</h2>
+<h2>Requisitos</h2>
 
-<pre>
-sudo apt install docker-compose
-</pre>
+<ul>
+    <li>Ubuntu 18.04 ou superior</li>
+    <li>Usuario root (sudo)</li>
+    <li>Conhecimento em comandos Linux</li>
+</ul>
 
-<h3>Configurações</h3>
+<hr />
 
-<p>Seguindo o link https://nginxproxymanager.com/#quick-setup</p>
+<h2>Docker Container</h2>
 
-<h4>Criar o arquivo docker-compose.yml dentro de algum diretorio de facil acesso</h4>
+<h3>Importante</h3>
 
-<pre>
-mkdir -p /home/usuario/dockers/
-cd /home/usuario/dockers/
-touch docker-compose.yml
-</pre>
+<p>
+    - É possivel fazer o pull de imagens do docker como o php7-fpm ou usar um builder, como o contido
+    no projeto citado no inicio desse documento, o builder é chamado de Dockerfile.
+</p>
 
-<pre>
-[docker-compose.yml]
-version: '3'
-services:
-  app:
-    image: 'jc21/nginx-proxy-manager:latest'
-    ports:
-      - '80:80'
-      - '81:81'
-      - '443:443'
-    environment:
-      DB_MYSQL_HOST: "db"
-      DB_MYSQL_PORT: 3306
-      DB_MYSQL_USER: "npm"
-      DB_MYSQL_PASSWORD: "npm"
-      DB_MYSQL_NAME: "npm"
-    volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
-  db:
-    image: 'jc21/mariadb-aria:latest'
-    environment:
-      MYSQL_ROOT_PASSWORD: 'npm'
-      MYSQL_DATABASE: 'npm'
-      MYSQL_USER: 'npm'
-      MYSQL_PASSWORD: 'npm'
-    volumes:
-      - ./data/mysql:/var/lib/mysql
-</pre>
+<h3>Preparando ambiente</h3>
 
-<h4>Build do docker NGINX PROXY MANAGER</h4>
+<p>
+    - Criar estrutura de diretorios e arquivos
+    <br />
+    - Criar arquivo docker-compose.yml
+    <br />
+    - Confgurar arquivo docker-compose.yml
+    <br />
+    - Criar Network external se necessario (exemplo: docker network create dev_gateway => {6c87c75ff021f620a83f293fc60578db8c66adbdf167a329bb4593c5b1894f9b})
+    <br />
+    - Criar pastas do projeto e aplicações
+    <br />
+    - Executar o projeto: docker-compose up -d
+    <br />
+</p>
 
-<pre>
-sudo docker-compose up -d
-sudo docker ps
-http://localhost:81
-
-#Dado para acesso
-Email:    admin@example.com
-Password: changeme
-</pre>
