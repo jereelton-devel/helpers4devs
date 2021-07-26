@@ -1,0 +1,72 @@
+
+<h1>CRONJOB HELPER</h1>
+
+<hr />
+
+<h2>Sobre</h2>
+
+<p>
+    ....
+</p>
+
+<hr />
+
+<h2>Requisitos</h2>
+
+<ul>
+    <li>...</li>
+    <li>...</li>
+    <li>...</li>
+    <li>...</li>
+</ul>
+
+<hr />
+
+<h2>Assunto do conteudo</h2>
+
+<h3>Exemplo de subconteudo</h3>
+
+<pre>
+-------------------------------------------------------------------------------
+
+# JWT
+
+	[Introdução]
+
+		Conhecido como token seguro o Json Web Token é uma chave de segurança para acesso controlado a recursos restritos contidos em apis.
+
+		Em Node a chave token é armazenada no cliente que tem a responsabilidade de guardar, proteger e informar o token quando requisitado pelo servidor. É possivel configurar opções de uso e controle como expiração de token, tipo de algoritimo etc..
+
+	[Exemplo]
+
+		- NodeJS
+
+			- Ínstalar
+				npm install jsonwebtoken --save (para salvar no package.json)
+
+			- Uso
+				const jwt = require('jsonwebtoken');
+
+				...
+				const token = jwt.sign(
+					//Payload
+					{
+						nome: "nome.usuario",
+						email: "email.usuario@email.com"
+					},
+
+					//Arquivo dotenv da aplicação
+					process.env.JWT_TOKEN,
+
+					//Opções JWT
+					{
+						expiresIn: '1h'
+					}
+				);
+				...
+
+			- Avançado
+				- Para garantir o uso do JWT durante as transações na api é necessário utiliar um metodo de validação do token, que pode ser um middleware de controle de login.
+
+
+</pre>

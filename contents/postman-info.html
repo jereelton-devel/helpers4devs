@@ -1,0 +1,82 @@
+
+<h1>CRONJOB HELPER</h1>
+
+<hr />
+
+<h2>Sobre</h2>
+
+<p>
+    ....
+</p>
+
+<hr />
+
+<h2>Requisitos</h2>
+
+<ul>
+    <li>...</li>
+    <li>...</li>
+    <li>...</li>
+    <li>...</li>
+</ul>
+
+<hr />
+
+<h2>Assunto do conteudo</h2>
+
+<h3>Exemplo de subconteudo</h3>
+
+<pre>
+
+# Postman
+
+[Introdução]
+
+    Programa utilizado para realizar requests a uma API Rest entre outras por meio de inteface grafica, onde é possível documentar a estrutura da API com exemplos e considerações gerais de uso.
+
+[Como Usar]
+
+    - Em Collections clicar em New Collection
+        - Preencher Name
+        - Descrever API em Description
+            - Se atentar as marcações markdown para ajudar na descrição
+            - Descrever usabilidade e parametrização da API
+
+    - Apos criar a collection podem ser criadas pastas ou criar direto as requisições
+
+    - Pode ser visualizado no web, porém precisa estar logado, para isso basta salvar as requisições e o resultado obtido.
+
+    - Também é possivel passar parametros nas requisições:
+        - http://link.api/:parametro1/:parametro2
+
+    - É possível ainda automatizar o uso do postman com pre-requests:
+        - Criar um environment (ambiente)
+        - Configurar o ambiente com as variaveis do pre request, exemplo:
+            - url: http://localhost
+            - email: email@email.com
+            - senha: 123
+            - auth:
+            ...
+        - Logo apos escolher uma collection e na aba Pre-request Scripts criar a logica para automação do processo, exemplo:
+            pm.sendRequest({
+                url: pm.environment.get("local") + '/auth',
+                method: 'POST',
+                header: {
+                    'content-type': 'application/json'
+                },
+                body: {
+                    mode: 'raw',
+                    raw: JSON.stringify({
+                        email: pm.environment.get("email"),
+                        password: pm.environment.get("password") })
+                }
+            }, function (err, res) {
+                pm.environment.set("auth", "JWT " + res.json().token);
+            });
+        - Assim é possível utilizar e recuperar as variveis na url de request e também no body, headers etc, exemplo:
+            GET http://{{url}}/endpoint
+                Headers
+                    Authorization: {{auth}}
+        - Em seguida a request pode ser salva para posterior utilização
+
+</pre>
