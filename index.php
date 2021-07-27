@@ -8,14 +8,14 @@ $tot = count($list);
 <html lang="">
 <head>
     <meta charset="utf-8">
-    <title>Webdev Helper</title>
+    <title>Helpers4Devs</title>
     <link rel="stylesheet" href="./css/style.css" type="text/css" />
 </head>
 <body>
 
 <div class="div-items-info">
     <h2>
-        Menu HELPER
+        HELPERS4DEVS Menu
         <br />
         <span class="author">
             Powered by: Jereelton Teixeira
