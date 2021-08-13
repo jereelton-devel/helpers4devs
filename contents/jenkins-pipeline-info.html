@@ -1,71 +1,74 @@
 
-<h1>CRONJOB HELPER</h1>
+<h1>JENKINS PIPELINE HELPER</h1>
 
 <hr />
 
 <h2>Sobre</h2>
 
 <p>
-    ....
+	O Jenkins é um rerviço de integração continua e entrega continua, CI (Continuos Integration) & CD (Continuos Delivey). As estapas de um CI ou CD podem ser dispostas em:
+	<br />
 </p>
+
+<ul>
+	<li>Planejamento</li>
+	<li>Codificação / Programação</li>
+	<li>Build</li>
+	<li>Test</li>
+	<li>Release</li>
+	<li>Deploy</li>
+	<li>Operate</li>
+	<li>Monitor</li>
+</ul>
+
+<p>
+	Todas as etapas devem dar um feedback para os desenvolvedores e gestores do projeto sobre bugs, problemas, falhas ou inconsistencias encontradas.
+	<br />
+	Um exemplo forte de pipeline é o Jenkins, uma ferramenta completa e open source para criar um ambiente completo.
+</p>
+
+<strong>Exemplo</strong>
+
+<ul>
+	<li>Planejamento</li>
+	<li>Development: Codificação / Programação</li>
+	<li>Build: Merge do pull request por exemplo (Controle de versao - GIT)</li>
+	<li>Test: Testes Unitarios</li>
+	<li>Release: Ambiente de testes</li>
+	<li>Deploy: Ambiente de produção</li>
+	<li>Operate: Uso em produção</li>
+	<li>Monitor: Monitoramento</li>
+</ul>
 
 <hr />
 
 <h2>Requisitos</h2>
 
 <ul>
-    <li>...</li>
-    <li>...</li>
-    <li>...</li>
-    <li>...</li>
+    <li>Conhecimento de deploy em staging</li>
+    <li>Acesso ao serviço do Jenkins</li>
 </ul>
 
 <hr />
 
-<h2>Assunto do conteudo</h2>
+<h2>Jenkins</h2>
 
-<h3>Exemplo de subconteudo</h3>
+<h3>Executando Deploy</h3>
+
+<p>
+	O Jenkins é uma ferramenta de pipeline usada para Integração e Entraga Continua de um software, possui todos os recursos
+	descritos e pertencentes a uma ferramenta de pipeline.
+</p>
+
+<p>
+	Ao acessar o painel de projetos e tendo permissão para fazer deploy no ambiente, basta seguir os seguintes os passos:
+</p>
 
 <pre>
--------------------------------------------------------------------------------
-
-# Pipelines
-
-	[Introdução]
-
-		Serviço de integração continua e entrega continua, CI (Continuos Integration) & CD (Continuos Delivey). As estapas de um CI ou CD podem ser dispostas em:
-
-			- Planejamento
-			- Codificação / Programação
-			- Build
-			- Test
-			- Release
-			- Deploy
-			- Operate
-			- Monitor
-
-		Todas as etapas devem dar um feedback para os desenvolvedores e gestores do projeto sobre bugs, problemas, falhas ou inconsistencias encontradas.
-
-		Um exemplo forte de pipeline é o Jenkins, uma ferramenta completa e open source para criar um ambiente completo.
-
-	[Exemplo]
-
-		- Planejamento
-		- Development: Codificação / Programação
-		- Build: Merge do pull request por exemplo (Controle de versao - GIT)
-		- Test: Testes Unitarios
-		- Release: Ambiente de testes
-		- Deploy: Ambiente de produção
-		- Operate: Uso em produção
-		- Monitor: Monitoramento
-
-
--------------------------------------------------------------------------------
-
-# Jenkins
-
-	[Introdução]
-
-		O Jenkins é uma ferramenta de pipeline usada para Integração e Entraga Continua de um software, possui todos os recursos descritos e pertencentes a uma ferramenta de pipeline.
-
+- Acessar o projeto pelo link
+- Clicar em construir com parâmetros
+- [BRANCH_TO_DEPLOY] Informar a branch do git que devera ser utilizada para criar o ambiente de staging, ex: BUG-1234
+- [STAGE_TO_DEPLOY] Informar o prefixo para acessar o ambiente no Jenkins, ex: -bug-1234
+- Ao final acessar o ambiente pela url:
+	https://{project_name}-bug-1234.stg.{your_domain}
 </pre>
