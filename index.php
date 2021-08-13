@@ -53,6 +53,9 @@ $tot = count($list);
 
 <div class="div-contents-info">
     <?php
+
+    include "./contents/lgpd.html";
+
     if($get_content != "") {
         if(file_exists('./contents/'.$get_content.".html")) {
             include './contents/'.$get_content.".html";

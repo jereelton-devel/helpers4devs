@@ -132,6 +132,33 @@
     docker pull repository/new_image_name
 </pre>
 
+<h3>Remover todos containers e imagens</h3>
+
+<p>
+    <strong>
+        NOTA: Cuidado, esse procedimento é irreversivel e ira limpar todos os containers 
+        e imagens instaladas no docker local.
+    </strong>
+</p>
+
+<pre>
+    docker stop $(docker -a -q) #Encerra os cotainers
+    docker rm $(docker -a -q) #Remove os container
+    docker rmi --force $(docker imageds -q) #Remove as imagens
+</pre>
+
+<pre>
+    #Contêineres:
+    docker container rm $(docker container ls -a -q)
+    #Imagens:
+    docker image rm $(docker image ls -a -q)
+    #Volumes:
+    docker volume rm $(docker volume ls -q)
+    docker volume rm --force $(docker volume list -q)
+    #Networks:
+    docker network rm $(docker network ls -q)
+</pre>
+
 <h3>Outros comandos</h3>
 
 <pre>
@@ -140,4 +167,5 @@
     docker rmi "{REPO_TAG}" (Remover container e imagem pelo REPOSITORIO)
     docker image rm "{REPO_TAG}" (Remover imagem do REPOSITORIO)
     docker container rm "{NAME}" (Remover container)
+    docker network create networkname_default
 </pre>

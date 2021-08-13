@@ -1,0 +1,86 @@
+
+<h1>AUTOLOAD HELPER</h1>
+
+<hr />
+
+<h2>Sobre</h2>
+
+<p>
+    Passo a passo para mostrar como configurar o autoload php composer
+</p>
+
+<hr />
+
+<h2>Requisitos</h2>
+
+<ul>
+    <li>PHP</li>
+    <li>Gerenciador de Pacotes PHP (Composer)</li>
+    <li>Composer Autoload</li>
+    <li>Conhecimento em Namespace</li>
+</ul>
+
+<hr />
+
+<h2>Autoload</h2>
+
+<h3>Configuração</h3>
+
+<p>
+    Para recarregar/atualizar o ambiente com o composer é preciso editar corretamente o arquivo composer.json
+    obedecendo a seguinte estrutura para definição de namespace:
+</p>
+
+<pre>
+"{{{VENDOR}}}\\{{{NAMESPACE}}}\\": "src/"
+</pre>
+
+<h4>Exemplo</h4>
+
+<pre>
+"{{{VENDOR}}}\\Controllers\\": "controllers/"
+</pre>
+
+<p>
+    Um modelo de configuração para autoload no arquivo composer.json pode ser visto a seguir::
+</p>
+
+<pre>
+"autoload": {
+    "psr-4": {
+        "{{{VENDOR}}}\\Controllers\\": "controllers/",
+        "{{{VENDOR}}}\\Interfaces\\": "controllers/interfaces/",
+        "{{{VENDOR}}}\\Services\\": "services/",
+        "{{{VENDOR}}}\\Models\\": "models/",
+        "{{{VENDOR}}}\\Models\\Interfaces\\": "models/interfaces/",
+        "{{{VENDOR}}}\\Libraries\\": "libraries/"
+    }
+},
+</pre>
+
+<h3>Executando</h3>
+
+<p>
+    Para atualizar o autoload com os namespace inseridos no composer.json, use:
+</p>
+
+<pre>
+composer dump-autoload
+</pre>
+
+<h3>Exemplo de uso</h3>
+
+<pre>
+&lt;?php
+
+namespace HunterCodexs\Controllers;
+
+class HunterCodexsController
+{
+    public function __construct()
+    {
+        //Code Here ...
+    }
+}
+</pre>
+

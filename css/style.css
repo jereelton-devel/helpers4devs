@@ -116,7 +116,7 @@ small {
     color: #8B0000;
     background: #ffc6c6;
     border: solid #8B0000 1px;
-    margin: 20px;
-    margin-bottom: 40px;
     padding: 30px;
+    margin: 20px 0px;
+    width: 95%;
 }
