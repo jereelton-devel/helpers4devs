@@ -61,7 +61,7 @@ $tot = count($list);
             include './contents/'.$get_content.".html";
         }
     } else {
-        include './contents/modelo-info.html';
+        include './contents/modelo-info.phtml';
     }
     ?>
 </div>
