@@ -13,6 +13,8 @@
     top: 0px;
     left: 0px;
     background: #232323;
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .div-items-info h2 {
@@ -46,6 +48,7 @@
 }
 
 .div-items-info ul li a:hover {
+    color: darkgoldenrod;
     text-decoration: underline;
 }
 

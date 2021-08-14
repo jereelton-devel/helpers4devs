@@ -1,14 +1,12 @@
 
-<h1>TITULO PRINCIPAL/GERAL</h1>
+<h1>REACT JS HELPER</h1>
 
 <hr />
 
 <h2>Sobre</h2>
 
 <p>
-    Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo
-    utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou
-    para fazer um livro de modelos de tipos.
+    Um breve e direto conteúdo relacionado ao desenvolvimento de aplicativos utilizando REACT JS.
 </p>
 
 <hr />
@@ -16,85 +14,324 @@
 <h2>Requisitos</h2>
 
 <ul>
-    <li>Requisito 1</li>
-    <li>Requisito 2</li>
-    <li>Requisito 3</li>
-    <li>Requisito 4</li>
-    <li>Requisito 5</li>
+    <li>NPM</li>
+    <li>NodeJS</li>
+    <li>React APP</li>
+	<li>Conhecimento em Javascript e Componentes</li>
 </ul>
 
 <hr />
 
-<h2>Item 1</h2>
+<h2>Criando um projeto REACT JS</h2>
 
-<h3>Sobre o titulo 1</h3>
-
-<pre>
-
-REACT HELPER
-
-- Criar projeto/diretorio
-
-- Executar comando para criar o projeto
-	npx create-react-app .
-
-- Verificar arquivo package.json
-
-
-- Iniciar serviço/servidor node/react
-	npm start
-
-- Acessar o projeto criado
-	http://localhost:3000
-	http://192.168.15.13:3000
-
-- Criar projeto no GitHub
-
-- Clonar Projeto
-	git clone https://github.com/jereelton-devel/my-tasks-react.git
-
-- Alterar ou dar permissões
-
-- Abrir projeto no Editor/IDE
-
-- Estrutura de pastas
-	# Pasta publica onde ficam os arquivos publicos do projeto, como o index.html
-	public/
-	#Source do Projeto, onde ficam os componentes iniciais como o App
-	src/
-	# Modulos NodeJS
-	node_modules/
-
-- Instalar icones do react
-	npm install react-icons --save
-
-- Trabalhar com rotas
-	npm install react-router-dom
-
-- Trabalhar com requisições
-	npm install axios
-
-- Gerar versão build
-	npm run build
-
-- Acessar aplicação de produção
-	http://sample.local/ (exemplo)
-
-
-- Funcionamento Basico
-</pre>
-
-<hr />
-
-<h2>Item 2</h2>
-
-<h3>Sobre o titulo 2</h3>
+<h3>Inicialização</h3>
 
 <p>
-    Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo
-    utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou
-    para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao
-    salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60,
-    quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a
-    ser integrado a softwares de editoração eletrônica como Aldus PageMaker.
+	Para iniciar um projeto em React JS, crie uma pasta dedicada ao projeto
 </p>
+
+<pre>
+mkdir /home/user/devel/projects/react/project_name
+cd /home/user/devel/projects/react/project_name
+</pre>
+
+<p>
+	Logo apos criar e acessar a pasta criada, executar o comando de criação do projeto modelo
+</p>
+
+<pre>
+npx create-react-app .
+</pre>
+
+<p>
+	Verificar, e editar se for o caso, as informações no arquivo package.json
+</p>
+
+<p>
+	Iniciar serviço/servidor node/react
+</p>
+
+<pre>
+npm start
+</pre>
+
+<p>
+	Acessar o projeto criado pelo browser
+</p>
+
+<pre>
+http://localhost:3000
+http://192.168.15.13:3000
+</pre>
+
+<p>
+	Opcionalmente, pode se criar o projeto no GitHub e depois clona-lo, assim como também
+	dar as devidas permissões de escrita no projeto
+</p>
+
+<p>
+	Agora é só abrir o projeto em uma IDE ou Editor de preferência e programar a aplicação
+</p>
+
+<h3>Estrutura de pastas</h3>
+
+<pre>
+public/ # Pasta publica onde ficam os arquivos publicos do projeto, como o index.html
+src/ #Source do Projeto, onde ficam os componentes iniciais como o App
+node_modules/ # Modulos NodeJS
+</pre>
+
+<h2>Configurações Extras</h2>
+
+<h3>Instalar icones do react</h3>
+
+<pre>
+npm install react-icons --save
+</pre>
+
+<h3>Trabalhar com rotas</h3>
+
+<pre>
+npm install react-router-dom --save
+</pre>
+
+<h3>Trabalhar com requisições</h3>
+
+<pre>
+npm install axios --save
+</pre>
+
+<h3>Gerar versão de produção</h3>
+
+<p>
+	A versão de produção ira gerar um "compilado" de arquivos contendo o código html, css e javascript do
+	projeto e poderá ser acessado pelo browser hospedado em qualquer servidor http web, abaixo segue um exemplo:
+</p>
+
+<pre>
+npm run build
+</pre>
+
+<pre>
+total 24
+-rwx------ 1 username groupname   67 jul 28 14:30 robots.txt
+-rwx------ 1 username groupname  492 jul 28 14:30 manifest.json
+-rwx------ 1 username groupname 9664 jul 28 14:30 logo512.png
+-rwx------ 1 username groupname 5347 jul 28 14:30 logo192.png
+-rwx------ 1 username groupname 3870 jul 28 14:30 favicon.ico
+drwx------ 1 username groupname    0 jul 28 14:30 static << arquivos compilados
+-rwx------ 1 username groupname 2235 jul 28 14:30 index.html << pagina inicial
+-rwx------ 1 username groupname  869 jul 28 14:30 asset-manifest.json
+</pre>
+
+<h3>Acessar aplicação de produção (sample)</h3>
+
+<pre>
+http://sample.local/
+</pre>
+
+<h2>Arquitetura e funcionamento de um projeto REACT JS</h2>
+
+<h3>Estrutura de Exemplo</h3>
+
+<p>
+	Um projeto em React JS pode ser estruturado e utilizado de diversas formas, porém aqui será demonstrado o
+	formato mais usual pelos devs iniciais ou não, abaixo uma estrutura de exemplo:
+</p>
+
+<pre>
+total 675
+drwx------ 1 username groupname      0 jul 28 14:30 ./
+drwx------ 1 username groupname      0 ago  7 20:31 ../
+drwx------ 1 username groupname      0 jul 28 14:30 build/
+drwx------ 1 username groupname      0 jul 27 23:01 node_modules/
+-rwx------ 1 username groupname    875 jul 27 23:01 package.json*
+-rwx------ 1 username groupname 687424 jul 27 23:01 package-lock.json*
+drwx------ 1 username groupname      0 jul 27 21:05 public/
+drwx------ 1 username groupname      0 jul 28 14:53 src/
+</pre>
+
+<h3>Descrição das pastas</h3>
+
+<h4>build/</h4>
+
+<p>
+	A pasta build é onde fica os arquivos "compilados" ou melhor "buildados" com o comando npm run build, sendo que
+	esses arquivos podem ser acessados ou incorporados em qualquer projeto web tradicional, não necessitando de um
+	servidor web do tipo node.
+</p>
+
+<h4>node_modules/</h4>
+
+<p>
+	Essa é a pasta onde o npm faz as instalações dos módulos que são baixados de acordo com as necessidades do projeto
+	utilizando o comando npm install.
+</p>
+
+<h4>package.json</h4>
+
+<p>
+	Nesse arquivo estão localizados todas as configurações do projeto, assim como as dependências do mesmo, exemplo:
+</p>
+
+<pre>
+    "dependencies": {
+        "@testing-library/jest-dom": "^5.14.1",
+        "@testing-library/react": "^11.2.7",
+        "@testing-library/user-event": "^12.8.3",
+        "axios": "^0.21.1",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-router-dom": "^5.2.0",
+        "react-scripts": "4.0.3",
+        "web-vitals": "^1.1.2"
+    },
+</pre>
+
+<h4>package-lock.json</h4>
+
+<p>
+	O package-lock.json não representa uma informação muito relevante, apenas mostra como se fosse um log os pacotes
+	ou modulos que foram instalados no projeto (mas não estão todos sendo usados necessariamente)
+</p>
+
+<h4>public/</h4>
+
+<p>
+	Como o nome da pasta sugere, nela ficam os arquivos públicos que serão acessados pelo browser para renderizar o
+	conteúdo da aplicação, o principal arquivo dessa pasta é o index.html.
+</p>
+
+<p>
+	Existe uma div nesse arquivo identificada pelo id root, e por padrão é nessa div que todo o conteudo da aplicação
+	é renderizado pelo React, importante não alterar esse id, ou manter sincronizado com o App.
+</p>
+
+<h4>src/</h4>
+
+<p>
+	Como ultima e não menos importante temos a pasta src (source) onde todo o conteúdo programável da aplicação é feito.
+	Nessa pasta tempo uma estrutura padrão inicial, como abaixo:
+</p>
+
+<pre>
+total 4
+drwx------ 1 username groupname    0 jul 28 14:53 ./
+drwx------ 1 username groupname    0 ago 13 21:14 ../
+-rwx------ 1 username groupname  182 jul 27 21:46 App.css*
+-rwx------ 1 username groupname 2429 jul 28 14:53 App.jsx*
+drwx------ 1 username groupname    0 jul 27 23:41 components/
+-rwx------ 1 username groupname  460 jul 27 22:16 index.css*
+-rwx------ 1 username groupname  221 jul 26 22:22 index.js*
+</pre>
+
+<p>
+	O arquivo inicial é o index.js responsável por carregar na aplicação todo o conteúdo programado através da importação
+	de bibliotecas React e do script principal App.jsx, conforme exemplo abaixo:
+</p>
+
+<pre>
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import './index.css';
+import App from './App';
+
+ReactDOM.render(
+  &lt;React.StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/React.StrictMode&gt;,
+  document.getElementById('root')
+);
+</pre>
+
+<p>
+	Os arquivos CSS dispensam explicações, e o script  App.jsx é o script central da aplicação, onde todo recurso do
+	app é concentrado, utilizado e gerido.
+</p>
+
+<p>
+	Na pasta componentes estão localizados os componentes do app, como botões, listas, menus, telas entre outros.
+</p>
+
+<h2>Fluxo de Execução de um projeto REACT JS</h2>
+
+<h3>Inicialização</h3>
+
+<p>
+	O processo de execução do app pode ser exemplificado a seguir:
+</p>
+
+<pre>
+index.html < index.js < App.jsx, App.css < components/{Component1, Component2...}
+</pre>
+
+<p>
+	Ao iniciar uma aplicação React todos os recursos previamente programados são incorporados/renderizados no arquivo
+	index.html dentro do elemento html com id "root"...
+</p>
+<p>
+	O script App.jsx contido na pasta src é quem ajunta os demais scripts que por sua vez representam os componentes da
+	aplicação ou app.
+</p>
+<p>
+	Abaixo segue um breve exemplo do script App.jsx:
+</p>
+
+<pre>
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import axios from 'axios';
+
+import "./components/Tasks";
+import "./App.css";
+
+import AppTitle from "./components/AppTitle";
+import Tasks from "./components/Tasks";
+import AddTask from "./components/AddTask";
+import TaskDetails from "./components/TaskDetails";
+
+const App = () => {
+    return ();
+};
+
+export default App;
+</pre>
+
+<h3>Boas praticas e definições</h3>
+
+<p>
+	É uma boa pratica e até mesmo muito correto buscar sempre que possível o desenvolvimento de forma a ter componentes
+	reutilizaveis no projeto, por exemplo: um botão ? SIM, criando scripts especificos para ele assim como seu arquivo
+	de estilos CSS, conforme exemplo abaixo:
+</p>
+
+<small>App.jsx</small>
+<pre>
+import React from 'react';
+
+import "./Button.css"
+
+const Button = ({ children, onClick }) => {
+    return &lt;button onClick={onClick} className="add-task-button"&gt;
+        {children}
+    &lt;/button&gt;;
+};
+
+export default Button;
+</pre>
+
+<small>App.css</small>
+<pre>
+.add-task-button {
+    background-color: chartreuse;
+    height: 40px;
+    padding: 0 10px;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 16px;
+    color: #444444;
+    cursor: pointer;
+    border: none;
+}
+</pre>

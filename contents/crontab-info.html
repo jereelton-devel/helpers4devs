@@ -6,7 +6,7 @@
 <h2>Sobre</h2>
 
 <p>
-    ....
+    Comandos executados automaticamente pelo sistema Unix via agendamento de jobs (cron jobs).
 </p>
 
 <hr />
@@ -14,46 +14,39 @@
 <h2>Requisitos</h2>
 
 <ul>
-    <li>...</li>
-    <li>...</li>
-    <li>...</li>
-    <li>...</li>
+    <li>Sistema Operacional Linux</li>
 </ul>
 
 <hr />
 
-<h2>Assunto do conteudo</h2>
+<h2>Cron Linux</h2>
 
-<h3>Exemplo de subconteudo</h3>
+<h3>Estrutura</h3>
 
 <pre>
-    # Crontab (agent linux)
+* * * * * [comando] [ >> saida: (opcional)]
+- Minuto (0 a 59)
+- Hora (0 a 23)
+- Dia (1 a 31)
+- Mês (1 a 12)
+- Dia da semana (0 a 7)
+- Comando (comando a ser executado)
+</pre>
 
-    [Introdução]
+<h3>Comandos úteis</h3>
 
-    Comandos executados automaticamente pelo sistema Unix via agendamento de jobs (cron jobs).
+<pre>
+crontab -l (lista cron jobs)
+crontab -e (edita a cron atual)
+crontab -r (apaga a cron atual)
+crontab -i (apaga a cron atual com confirmação da operação)
+</pre>
 
-    [Comandos]
+<h3>Exemplos</h3>
 
-    crontab -l (lista cron jobs)
-    crontab -e (edita a cron atual)
-    crontab -r (apaga a cron atual)
-    crontab -i (apaga a cron atual com confirmação da operação)
-
-    [Estrutura]
-
-    * * * * * [comando] [ >> saida: (opcional)]
-
-    - Minuto (0 a 59)
-    - Hora (0 a 23)
-    - Dia (1 a 31)
-    - Mês (1 a 12)
-    - Dia da semana (0 a 7)
-    - Comando (comando a ser executado)
-
-    [Exemplos]
-    0 5 * * * /root/backup.sh >/dev/null 2>&1
-    00 10 * * * php /var/www/site/bin/script.php
-    00 10 * * * /var/www/site/bin/script.sh
-    30 22 10 * * echo "Cron is running..." > /home/user/cron/log.txt
+<pre>
+0 5 * * * /root/backup.sh >/dev/null 2>&1
+00 10 * * * php /var/www/site/bin/script.php
+00 10 * * * /var/www/site/bin/script.sh
+30 22 10 * * echo "Cron is running..." > /home/user/cron/log.txt
 </pre>
