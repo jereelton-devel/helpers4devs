@@ -42,11 +42,162 @@ composer --version
 </pre>
 
 <p>
-    Logo após,
+    Logo após, siga o exemplo abaixo:
 </p>
 
 <pre>
-composer install
+$ composer init
+
+Welcome to the Composer config generator
+
+This command will guide you through creating your composer.json config.
+
+Package name (&lt;vendor&gt;/&lt;name&gt;) [vendor_name/project_name]: vendor_name/project_name
+Description []: Personal Tasks Manager
+Author [Username Lastname &lt;username@email.com&gt;, n to skip]:
+Minimum Stability []:
+Package Type (e.g. library, project, metapackage, composer-plugin) []: project
+License []: MIT
+
+Define your dependencies.
+
+Would you like to define your dependencies (require) interactively [yes]?
+Search for a package: autoload
+
+Found 15 packages matching autoload
+
+   [0] composer/composer
+   [1] nette/robot-loader
+   [2] laminas/laminas-zendframework-bridge
+   [3] classpreloader/classpreloader
+   [4] hoa/consistency
+   [5] typo3/class-alias-loader
+   [6] laminas/laminas-loader
+   [7] zendframework/zend-loader
+   [8] roots/bedrock-autoloader
+   [9] automattic/jetpack-autoloader
+  [10] funkjedi/composer-include-files
+  [11] infection/include-interceptor
+  [12] theseer/autoload
+  [13] aura/autoload
+  [14] indigophp/doctrine-annotation-autoload
+
+Enter package # to add, or the complete package name if it is not listed: 0
+Enter the version constraint to require (or leave blank to use the latest version):
+Using version ^2.1 for composer/composer
+Search for a package:
+Would you like to define your dev dependencies (require-dev) interactively [yes]? n
+Add PSR-4 autoload mapping? Maps namespace "VendorName\ProjectName" to the entered relative path. [src/, n to skip]:
+
+{
+    "name": "vendor_name/project_name",
+    "description": "Description to project",
+    "type": "project",
+    "require": {
+        "composer/composer": "^2.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "VendorName\\ProjectName\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Username Lastname",
+            "email": "username@email.com"
+        }
+    ]
+}
+
+Do you confirm generation [yes]?
+Would you like to install dependencies now [yes]?
+Loading composer repositories with package information
+Updating dependencies
+Lock file operations: 25 installs, 0 updates, 0 removals
+  - Locking composer/ca-bundle (1.2.10)
+  - Locking composer/composer (2.1.5)
+  - Locking composer/metadata-minifier (1.0.0)
+  - Locking composer/semver (3.2.5)
+  - Locking composer/spdx-licenses (1.5.5)
+  - Locking composer/xdebug-handler (2.0.2)
+  - Locking justinrainbow/json-schema (5.2.11)
+  - Locking psr/container (1.1.1)
+  - Locking psr/log (1.1.4)
+  - Locking react/promise (v2.8.0)
+  - Locking seld/jsonlint (1.8.3)
+  - Locking seld/phar-utils (1.1.1)
+  - Locking symfony/console (v5.3.6)
+  - Locking symfony/deprecation-contracts (v2.4.0)
+  - Locking symfony/filesystem (v5.3.4)
+  - Locking symfony/finder (v5.3.4)
+  - Locking symfony/polyfill-ctype (v1.23.0)
+  - Locking symfony/polyfill-intl-grapheme (v1.23.1)
+  - Locking symfony/polyfill-intl-normalizer (v1.23.0)
+  - Locking symfony/polyfill-mbstring (v1.23.1)
+  - Locking symfony/polyfill-php73 (v1.23.0)
+  - Locking symfony/polyfill-php80 (v1.23.1)
+  - Locking symfony/process (v5.3.4)
+  - Locking symfony/service-contracts (v2.4.0)
+  - Locking symfony/string (v5.3.3)
+Writing lock file
+Installing dependencies from lock file (including require-dev)
+Package operations: 25 installs, 0 updates, 0 removals
+  - Downloading symfony/polyfill-php80 (v1.23.1)
+  - Downloading symfony/process (v5.3.4)
+  - Downloading symfony/finder (v5.3.4)
+  - Downloading symfony/polyfill-ctype (v1.23.0)
+  - Downloading symfony/filesystem (v5.3.4)
+  - Downloading symfony/polyfill-mbstring (v1.23.1)
+  - Downloading symfony/polyfill-intl-normalizer (v1.23.0)
+  - Downloading symfony/polyfill-intl-grapheme (v1.23.1)
+  - Downloading symfony/string (v5.3.3)
+  - Downloading symfony/service-contracts (v2.4.0)
+  - Downloading symfony/polyfill-php73 (v1.23.0)
+  - Downloading symfony/deprecation-contracts (v2.4.0)
+  - Downloading symfony/console (v5.3.6)
+  - Downloading seld/phar-utils (1.1.1)
+  - Downloading seld/jsonlint (1.8.3)
+  - Downloading react/promise (v2.8.0)
+  - Downloading psr/log (1.1.4)
+  - Downloading justinrainbow/json-schema (5.2.11)
+  - Downloading composer/xdebug-handler (2.0.2)
+  - Downloading composer/spdx-licenses (1.5.5)
+  - Downloading composer/semver (3.2.5)
+  - Downloading composer/metadata-minifier (1.0.0)
+  - Downloading composer/ca-bundle (1.2.10)
+  - Downloading composer/composer (2.1.5)
+  - Installing symfony/polyfill-php80 (v1.23.1): Extracting archive
+  - Installing symfony/process (v5.3.4): Extracting archive
+  - Installing symfony/finder (v5.3.4): Extracting archive
+  - Installing symfony/polyfill-ctype (v1.23.0): Extracting archive
+  - Installing symfony/filesystem (v5.3.4): Extracting archive
+  - Installing symfony/polyfill-mbstring (v1.23.1): Extracting archive
+  - Installing symfony/polyfill-intl-normalizer (v1.23.0): Extracting archive
+  - Installing symfony/polyfill-intl-grapheme (v1.23.1): Extracting archive
+  - Installing symfony/string (v5.3.3): Extracting archive
+  - Installing psr/container (1.1.1): Extracting archive
+  - Installing symfony/service-contracts (v2.4.0): Extracting archive
+  - Installing symfony/polyfill-php73 (v1.23.0): Extracting archive
+  - Installing symfony/deprecation-contracts (v2.4.0): Extracting archive
+  - Installing symfony/console (v5.3.6): Extracting archive
+  - Installing seld/phar-utils (1.1.1): Extracting archive
+  - Installing seld/jsonlint (1.8.3): Extracting archive
+  - Installing react/promise (v2.8.0): Extracting archive
+  - Installing psr/log (1.1.4): Extracting archive
+  - Installing justinrainbow/json-schema (5.2.11): Extracting archive
+  - Installing composer/xdebug-handler (2.0.2): Extracting archive
+  - Installing composer/spdx-licenses (1.5.5): Extracting archive
+  - Installing composer/semver (3.2.5): Extracting archive
+  - Installing composer/metadata-minifier (1.0.0): Extracting archive
+  - Installing composer/ca-bundle (1.2.10): Extracting archive
+  - Installing composer/composer (2.1.5): Extracting archive
+6 package suggestions were added by new dependencies, use `composer suggest` to see details.
+Generating autoload files
+20 packages you are using are looking for funding.
+Use the `composer fund` command to find out more!
+PSR-4 autoloading configured. Use "namespace VendorName\ProjectName;" in src/
+Include the Composer autoloader with: require 'vendor/autoload.php';
 </pre>
 
 <h3>Configuração</h3>
